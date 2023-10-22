@@ -1,0 +1,29 @@
+﻿@model FloorLocationViewModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayot.cshtml";
+}
+
+<form asp-action="Update" asp-controller="FloorLocation" style="margin-bottom:15px;margin-top:15px">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Name" style="color:red"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select class="form-control" asp-for="IsActive">
+                <option value="" disabled selected class="disabled-select">
+                    Aktif Mi?
+                </option>
+                <option value="true">Evet</option>
+                <option value="false">Hayır</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary" style="width:100%">Güncelle</button>
+        </div>
+    </div>
+</form>
+
+
+

@@ -60,12 +60,13 @@ namespace EmlakOfisiSitesi
             builder.Services.AddScoped<IRepository<HousingAdvertisement>, HousingAdvertisementRepository>();
             builder.Services.AddScoped<IRepository<HousingType>, HousingTypeRepository>();
             builder.Services.AddScoped<IRepository<NumberOfBathroom>, NumberOfBathroomRepository>();
+            builder.Services.AddScoped<IRepository<NumberOfFloorsInBuilding>, NumberOfFloorsInBuildingRepository>();
             builder.Services.AddScoped<IRepository<NumberOfRoomHall>, NumberOfRoomHallRepository>();
             builder.Services.AddScoped<IRepository<UsageStatus>, UsageStatusRepository>();
 
 
-            builder.Services.AddScoped<IValidator<BuildingAgeViewModel>,BuildingAgeViewModelValidator>();
-
+            //builder.Services.AddScoped<IValidator<BuildingAgeViewModel>,BuildingAgeViewModelValidator>();
+            //builder.Services.AddScoped < IValidator<DateOfAdvertisementViewModel>
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

@@ -1,0 +1,47 @@
+﻿@model NumberOfRoomHallViewModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayot.cshtml";
+}
+
+
+<form asp-action="Update" asp-controller="NumberOfRoomHall" style="margin-bottom:15px;margin-top:15px">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Name" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <input type="number" asp-for="RoomNumber" class="form-control" placeholder="RoomNumber">
+            <span asp-validation-for="RoomNumber" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <input type="number" asp-for="HallNumber" class="form-control" placeholder="HallNumber">
+            <span asp-validation-for="HallNumber" style="color:red"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select class="form-control" asp-for="IsAndOver">
+                <option value="" disabled selected class="disabled-select">
+                    Üzeri Mi?
+                </option>
+                <option value="true">Evet</option>
+                <option value="false">Hayır</option>
+            </select>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select class="form-control" asp-for="IsActive">
+                <option value="" disabled selected class="disabled-select">
+                    Aktif Mi?
+                </option>
+                <option value="true">Evet</option>
+                <option value="false">Hayır</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary" style="width:100%">Güncelle</button>
+        </div>
+    </div>
+</form>
+
+
+

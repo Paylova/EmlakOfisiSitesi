@@ -1,0 +1,19 @@
+﻿@model HousingTypeViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayot.cshtml";
+}
+
+<form asp-action="Create" asp-controller="HousingType" style="margin-bottom:15px;margin-top:15px">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Name" style="color:red"></span>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success" style="width:100%">Ekle</button>
+        </div>
+    </div>
+</form>
+
+

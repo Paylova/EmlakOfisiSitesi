@@ -7,5 +7,6 @@
         public int RoomNumber { get; set; }
         public int HallNumber { get; set; }
         public bool IsAndOver { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

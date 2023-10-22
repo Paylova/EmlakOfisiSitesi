@@ -35,5 +35,6 @@ namespace EmlakOfisiSitesi.ViewModels
         public bool IsForRent { get; set; }
         public Agent Agent { get; set; }
         public ICollection<HousingAdvertisementPhoto> HousingAdvertisementPhotos { get; set; }
+        public bool? IsActive { get; set; }
     }
 }
