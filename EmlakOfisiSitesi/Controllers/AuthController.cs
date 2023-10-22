@@ -67,7 +67,7 @@ namespace EmlakOfisiSitesi.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                    return RedirectToAction("Index", "AdminPanel");
+                    return RedirectToAction("Index", "Admin");
                 }
                 return NotFound();
             }

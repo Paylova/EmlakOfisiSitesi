@@ -1,5 +1,8 @@
-﻿using EmlakOfisiSitesi.Models.Entities;
+﻿using EmlakOfisiSitesi.FluentValidations;
+using EmlakOfisiSitesi.Models.Entities;
 using EmlakOfisiSitesi.Repositories;
+using EmlakOfisiSitesi.ViewModels;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +43,13 @@ namespace EmlakOfisiSitesi
                     options.AccessDeniedPath = "/Error/Unauthorized";
                 });
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
+            });
             builder.Services.AddScoped<IRepository<BuildingAge>, BuildingAgeRepository>();
             builder.Services.AddScoped<IRepository<DateOfAdvertisement>, DateOfAdvertisementRepository>();
             builder.Services.AddScoped<IRepository<DeedStatus>, DeedStatusRepository>();
@@ -52,6 +62,9 @@ namespace EmlakOfisiSitesi
             builder.Services.AddScoped<IRepository<NumberOfBathroom>, NumberOfBathroomRepository>();
             builder.Services.AddScoped<IRepository<NumberOfRoomHall>, NumberOfRoomHallRepository>();
             builder.Services.AddScoped<IRepository<UsageStatus>, UsageStatusRepository>();
+
+
+            builder.Services.AddScoped<IValidator<BuildingAgeViewModel>,BuildingAgeViewModelValidator>();
 
 
             // Add services to the container.

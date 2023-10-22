@@ -1,39 +1,35 @@
-﻿.container {
-    display: flex;
-    justify-content: flex-start; /* Container'ı sola yaslar */
+﻿body {
+    font-family: Arial, sans-serif;
 }
 
-.filter {
+.container {
+    display: flex;
+}
+
+.filter-container {
     width: 25%;
     padding: 20px;
-    background-color: #f2f2f2;
-    /* Filtreleme seçeneklerini stilize edebilirsiniz */
+    background-color: #f0f0f0;
 }
 
-.listings {
+.listings-container {
     width: 75%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start; /* Listings'ı sola yaslar */
+    padding: 20px;
 }
 
 .listing {
-    width: calc(50% - 20px); /* İlanların genişliğini ayarlar */
-    margin: 10px;
-    padding: 10px;
     border: 1px solid #ccc;
-    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
-img {
-    max-width: 100%;
-}
+    .listing img {
+        max-width: 100%;
+    }
 
-h2 {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
+    .listing h3 {
+        font-size: 18px;
+        margin: 10px 0;
+    }
 
-p {
-    font-size: 1em;
-}
+/* Diğer stillemeler buraya eklenebilir */

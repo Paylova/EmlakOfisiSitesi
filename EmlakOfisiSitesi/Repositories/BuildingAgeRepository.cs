@@ -1,4 +1,5 @@
 ﻿using EmlakOfisiSitesi.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmlakOfisiSitesi.Repositories
@@ -48,7 +49,7 @@ namespace EmlakOfisiSitesi.Repositories
 
         public async Task Update(BuildingAge entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.BuildingAges.Update(entity);
             await _context.SaveChangesAsync();
         }
     }
