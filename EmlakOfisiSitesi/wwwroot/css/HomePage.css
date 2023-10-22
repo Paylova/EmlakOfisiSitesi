@@ -1,35 +1,43 @@
-﻿body {
-    font-family: Arial, sans-serif;
-}
-
+﻿/* CSS ile sayfanın stilini özelleştirebilirsiniz */
 .container {
     display: flex;
+    justify-content: space-between;
+    margin: 20px;
 }
 
-.filter-container {
-    width: 25%;
-    padding: 20px;
+.filter-section {
+    width: 30%;
     background-color: #f0f0f0;
-}
-
-.listings-container {
-    width: 75%;
-    padding: 20px;
-}
-
-.listing {
-    border: 1px solid #ccc;
     padding: 10px;
-    margin-bottom: 20px;
 }
 
-    .listing img {
-        max-width: 100%;
-    }
+.ads-section {
+    width: 65%;
+    background-color: #ffffff;
+    padding: 10px;
+}
 
-    .listing h3 {
-        font-size: 18px;
-        margin: 10px 0;
-    }
+.ad-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
 
-/* Diğer stillemeler buraya eklenebilir */
+.ad-item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    margin-left:300px;
+}
+
+.card {
+    width: 100%; /* Kartları yatay olarak genişletmek için */
+}
+
+.col-md-3 {
+    margin-right: 20px; /* Kartlar ile filtreleme bölümü arasına sağda bir boşluk ekler */
+}
+
+
+
+/* Diğer stil tanımlamalarını burada yapabilirsiniz */

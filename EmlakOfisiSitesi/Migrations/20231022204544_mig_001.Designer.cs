@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmlakOfisiSitesi.Migrations
 {
     [DbContext(typeof(EmlakOfisiSitesi.Models.DbContext))]
-    [Migration("20231021144921_mig_002")]
-    partial class mig_002
+    [Migration("20231022204544_mig_001")]
+    partial class mig_001
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAndOver")
@@ -58,6 +58,30 @@ namespace EmlakOfisiSitesi.Migrations
                     b.ToTable("BuildingAges");
                 });
 
+            modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
             modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.DateOfAdvertisement", b =>
                 {
                     b.Property<Guid>("Id")
@@ -70,7 +94,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -94,7 +118,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -109,6 +133,35 @@ namespace EmlakOfisiSitesi.Migrations
                     b.ToTable("DeedStatuses");
                 });
 
+            modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.District", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Districts");
+                });
+
             modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.Facade", b =>
                 {
                     b.Property<Guid>("Id")
@@ -118,7 +171,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -142,7 +195,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -166,7 +219,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -196,10 +249,6 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<int>("BuildingAge")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -213,9 +262,8 @@ namespace EmlakOfisiSitesi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("DistrictId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Dues")
                         .HasColumnType("decimal(18,2)");
@@ -241,7 +289,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<Guid>("HousingTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCreditEligibility")
@@ -294,6 +342,8 @@ namespace EmlakOfisiSitesi.Migrations
 
                     b.HasIndex("DeedStatusId");
 
+                    b.HasIndex("DistrictId");
+
                     b.HasIndex("FacadeId");
 
                     b.HasIndex("FloorLocationId");
@@ -323,7 +373,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<Guid>("HousingAdvertisementId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -345,7 +395,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -369,7 +419,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAndOver")
@@ -399,7 +449,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int>("Max")
@@ -432,7 +482,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<int>("HallNumber")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAndOver")
@@ -462,7 +512,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -750,6 +800,17 @@ namespace EmlakOfisiSitesi.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
+            modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.District", b =>
+                {
+                    b.HasOne("EmlakOfisiSitesi.Models.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.HousingAdvertisement", b =>
                 {
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.Agent", "Agent")
@@ -759,6 +820,12 @@ namespace EmlakOfisiSitesi.Migrations
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.DeedStatus", "DeedStatus")
                         .WithMany()
                         .HasForeignKey("DeedStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EmlakOfisiSitesi.Models.Entities.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -795,6 +862,8 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Navigation("Agent");
 
                     b.Navigation("DeedStatus");
+
+                    b.Navigation("District");
 
                     b.Navigation("Facade");
 

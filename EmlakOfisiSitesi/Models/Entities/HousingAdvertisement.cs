@@ -27,8 +27,7 @@ namespace EmlakOfisiSitesi.Models.Entities
         public bool IsOnSite { get; set; }
         public decimal RentalIncome { get; set; }
         public decimal Deposit { get; set; }
-        public string City { get; set; }
-        public string District { get; set; }
+        public District District { get; set; }
         public string Neighborhood { get; set; }
         public bool IsForSale { get; set; }
         public bool IsForRent { get; set; }

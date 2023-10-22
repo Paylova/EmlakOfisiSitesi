@@ -26,6 +26,8 @@ namespace EmlakOfisiSitesi.Models
         public DbSet<NumberOfFloorsInBuilding> NumberOfFloorsInBuildings { get; set; }
         public DbSet<DateOfAdvertisement> DateOfAdvertisements { get; set; }
         public DbSet<HousingAdvertisementPhoto> HousingAdvertisementPhotos { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
