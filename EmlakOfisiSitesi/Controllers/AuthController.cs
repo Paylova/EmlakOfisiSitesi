@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using FluentValidation;
+using EmlakOfisiSitesi.Models.Entities;
 
 namespace EmlakOfisiSitesi.Controllers
 {
@@ -15,13 +16,15 @@ namespace EmlakOfisiSitesi.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IValidator<LoginViewModel> _loginValidator;
+        private readonly IValidator<RegisterViewModel> _registerValidator;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, IValidator<LoginViewModel> loginValidator)
+        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, IValidator<LoginViewModel> loginValidator, IValidator<RegisterViewModel> registerValidator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _loginValidator = loginValidator;
+            _registerValidator = registerValidator;
         }
 
         [HttpGet]
@@ -88,6 +91,48 @@ namespace EmlakOfisiSitesi.Controllers
                 Response.Cookies.Delete("userId");
             }
             return RedirectToAction("Login", "Auth");
+        }
+
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            var validationResult = await _registerValidator.ValidateAsync(registerViewModel);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+
+                return View(registerViewModel);
+            }
+            var agent = new Agent
+            {
+                CompanyName = registerViewModel.CompanyName,
+                Name = registerViewModel.Name,
+                Surname = registerViewModel.Surname,
+                UserName = registerViewModel.UserName,
+                PhoneNumber = registerViewModel.PhoneNumber,
+                Email = registerViewModel.Email,
+            };
+            var result = await _userManager.CreateAsync(agent, "123456");
+            if (result.Succeeded)
+            {
+                if (!await _roleManager.RoleExistsAsync("Agent"))
+                {
+                    var role = new IdentityRole("Agent");
+                    await _roleManager.CreateAsync(role);
+                }
+                await _userManager.AddToRoleAsync(agent, "Agent");
+                return RedirectToAction("Login","Auth");
+            }
+            return View();
         }
     }
 }

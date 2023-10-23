@@ -26,12 +26,13 @@ namespace EmlakOfisiSitesi.Repositories
 
         public IEnumerable<District> GetAll()
         {
-            return _context.Districts;
+            return _context.Districts.Include(district => district.City);
         }
 
         public District GetById(Guid id)
         {
-            return _context.Districts.Find(id);
+            return _context.Districts.Include(district => district.City)
+                             .FirstOrDefault(district => district.Id == id);
         }
 
         public async Task Remove(District entity)

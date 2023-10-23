@@ -374,7 +374,7 @@ namespace EmlakOfisiSitesi.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -405,11 +405,13 @@ namespace EmlakOfisiSitesi.Migrations
                     IsOnSite = table.Column<bool>(type: "bit", nullable: false),
                     RentalIncome = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Deposit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DistrictId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Neighborhood = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsForSale = table.Column<bool>(type: "bit", nullable: false),
                     IsForRent = table.Column<bool>(type: "bit", nullable: false),
                     AgentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MainImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: true)
@@ -423,6 +425,12 @@ namespace EmlakOfisiSitesi.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_HousingAdvertisements_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
                         name: "FK_HousingAdvertisements_DeedStatuses_DeedStatusId",
                         column: x => x.DeedStatusId,
                         principalTable: "DeedStatuses",
@@ -433,7 +441,7 @@ namespace EmlakOfisiSitesi.Migrations
                         column: x => x.DistrictId,
                         principalTable: "Districts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_HousingAdvertisements_Facades_FacadeId",
                         column: x => x.FacadeId,
@@ -472,6 +480,8 @@ namespace EmlakOfisiSitesi.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
                     HousingAdvertisementId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -541,6 +551,11 @@ namespace EmlakOfisiSitesi.Migrations
                 name: "IX_HousingAdvertisements_AgentId",
                 table: "HousingAdvertisements",
                 column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HousingAdvertisements_CityId",
+                table: "HousingAdvertisements",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HousingAdvertisements_DeedStatusId",

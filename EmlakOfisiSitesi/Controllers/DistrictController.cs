@@ -1,12 +1,154 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EmlakOfisiSitesi.Models.Entities;
+using EmlakOfisiSitesi.Repositories;
+using EmlakOfisiSitesi.ViewModels;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class DistrictController : Controller
     {
-        public IActionResult Index()
+        private readonly IRepository<District> _districtRepository;
+        private readonly IRepository<City> _cityRepository;
+        private readonly IValidator<DistrictViewModel> _districtValidator;
+
+        public DistrictController(IRepository<District> districtRepository, IValidator<DistrictViewModel> districtValidator, IRepository<City> cityRepository)
         {
-            return View();
+            _districtRepository = districtRepository;
+            _districtValidator = districtValidator;
+            _cityRepository = cityRepository;
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        public IActionResult List()
+        {
+            IEnumerable<District> districts = _districtRepository.GetAll();
+
+            return View(districts);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        public IActionResult Create()
+        {
+            var cities = _cityRepository.GetAll();
+            var districtViewModel = new DistrictViewModel
+            {
+                Cities = cities.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                })
+            };
+            return View(districtViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> Create(DistrictViewModel districtViewModel)
+        {
+            var validationResult = await _districtValidator.ValidateAsync(districtViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                    ModelState.AddModelError("", error.ErrorMessage);
+
+                var cities = _cityRepository.GetAll();
+                districtViewModel.Cities = cities.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                });
+                return View(districtViewModel);
+            }
+            City city = _cityRepository.GetById(districtViewModel.CityId);
+            District district = new District
+            {
+                IsActive = false,
+                Name = districtViewModel.Name,
+                City = city
+            };
+
+            await _districtRepository.Add(district);
+
+            return RedirectToAction("List", "District");
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        public IActionResult Update(Guid id)
+        {
+
+            District district = _districtRepository.GetById(id);
+            var cities = _cityRepository.GetAll();
+
+            if (district == null)
+                return NotFound();
+
+            DistrictViewModel districtViewModel = new DistrictViewModel
+            {
+                Id = district.Id,
+                Name = district.Name,
+                IsActive = district.IsActive,
+                CityId = district.City.Id,
+                Cities = cities.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                })
+            };
+
+            return View(districtViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> Update(DistrictViewModel districtViewModel)
+        {
+            var validationResult = await _districtValidator.ValidateAsync(districtViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                    ModelState.AddModelError("", error.ErrorMessage);
+
+                var cities = _cityRepository.GetAll();
+                districtViewModel.Cities = cities.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                });
+                return View(districtViewModel);
+            }
+            City city = _cityRepository.GetById(districtViewModel.CityId);
+            District district = _districtRepository.GetById(districtViewModel.Id);
+            district.Name = districtViewModel.Name;
+            district.City = city;
+            district.IsActive = districtViewModel.IsActive;
+
+            await _districtRepository.Update(district);
+
+            return RedirectToAction("List", "District");
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            District district = _districtRepository.GetById(id);
+
+            if (district == null)
+                return NotFound();
+
+            await _districtRepository.Remove(district);
+
+            return Ok();
         }
     }
 }

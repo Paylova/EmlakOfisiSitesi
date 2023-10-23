@@ -27,11 +27,13 @@ namespace EmlakOfisiSitesi.Models.Entities
         public bool IsOnSite { get; set; }
         public decimal RentalIncome { get; set; }
         public decimal Deposit { get; set; }
+        public City City { get; set; }
         public District District { get; set; }
-        public string Neighborhood { get; set; }
+        public string Address { get; set; }
         public bool IsForSale { get; set; }
         public bool IsForRent { get; set; }
         public Agent Agent { get; set; }
+        public Guid MainImageId { get; set; }
         public ICollection<HousingAdvertisementPhoto> HousingAdvertisementPhotos { get; set; }
     }
 }

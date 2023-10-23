@@ -1,6 +1,7 @@
 ﻿using EmlakOfisiSitesi.FluentValidations;
 using EmlakOfisiSitesi.Models.Entities;
 using EmlakOfisiSitesi.Repositories;
+using EmlakOfisiSitesi.Services.FileManager;
 using EmlakOfisiSitesi.ViewModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -26,7 +27,11 @@ namespace EmlakOfisiSitesi
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
-            }).AddEntityFrameworkStores<Models.DbContext>().AddDefaultTokenProviders();
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+            })
+            .AddEntityFrameworkStores<Models.DbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services.AddMvc().AddSessionStateTempDataProvider();
             builder.Services.AddSession(options =>
@@ -63,6 +68,10 @@ namespace EmlakOfisiSitesi
             builder.Services.AddScoped<IRepository<NumberOfFloorsInBuilding>, NumberOfFloorsInBuildingRepository>();
             builder.Services.AddScoped<IRepository<NumberOfRoomHall>, NumberOfRoomHallRepository>();
             builder.Services.AddScoped<IRepository<UsageStatus>, UsageStatusRepository>();
+            builder.Services.AddScoped<IRepository<City>, CityRepository>();
+            builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
+
+            builder.Services.AddScoped<IFileManager, FileManager>();
 
 
             //builder.Services.AddScoped<IValidator<BuildingAgeViewModel>,BuildingAgeViewModelValidator>();
@@ -110,14 +119,16 @@ namespace EmlakOfisiSitesi
                     roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
                 if (!ctx.Users.Any(u => u.UserName == "admin"))
                 {
-                    var adminUser = new IdentityUser
+                    var adminUser = new Admin
                     {
                         Id = Guid.NewGuid().ToString(),
+                        Name = "Osman",
+                        Surname = "Azizoğlu",
                         UserName = "admin",
                         Email = "adminemlak@hotmail.com",
                         SecurityStamp = Guid.NewGuid().ToString(),
                     };
-                    var result = await userMgr.CreateAsync(adminUser, "parolaadmin123");
+                    var result = await userMgr.CreateAsync(adminUser, "123456");
                     userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
                 }
             }
