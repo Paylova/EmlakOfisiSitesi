@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class UsageStatusController : Controller
     {
         private readonly IRepository<UsageStatus> _usageStatusRepository;
@@ -108,7 +109,7 @@ namespace EmlakOfisiSitesi.Controllers
         {
             UsageStatus usageStatus = _usageStatusRepository.GetById(id);
 
-            if (usageStatus != null)
+            if (usageStatus == null)
                 return NotFound();
 
             await _usageStatusRepository.Remove(usageStatus);

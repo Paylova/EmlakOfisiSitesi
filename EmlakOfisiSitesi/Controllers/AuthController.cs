@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using FluentValidation;
 using EmlakOfisiSitesi.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-
     public class AuthController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -30,7 +30,8 @@ namespace EmlakOfisiSitesi.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("List", "Home");
             return View(new LoginViewModel());
         }
 
@@ -51,6 +52,7 @@ namespace EmlakOfisiSitesi.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
+                
                 if (user != null)
                 {
                     var userId = user.Id;
@@ -69,12 +71,17 @@ namespace EmlakOfisiSitesi.Controllers
                     };
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    if (userRoles.Contains("Admin"))                    
+                        return RedirectToAction("List", "BuildingAge");                   
+                    else                    
+                        return RedirectToAction("List", "HousingAdvertisement");
+                    
 
-                    return RedirectToAction("Index", "Admin");
+
                 }
                 return NotFound();
             }
-
             else
             {
                 TempData["ErrorMessage"] = "Kullanıcı adı veya şifreniz yanlıştır";
@@ -90,9 +97,8 @@ namespace EmlakOfisiSitesi.Controllers
             {
                 Response.Cookies.Delete("userId");
             }
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("List", "Home");
         }
-
 
         [HttpGet]
         public IActionResult Register()
@@ -130,7 +136,7 @@ namespace EmlakOfisiSitesi.Controllers
                     await _roleManager.CreateAsync(role);
                 }
                 await _userManager.AddToRoleAsync(agent, "Agent");
-                return RedirectToAction("Login","Auth");
+                return RedirectToAction("Login", "Auth");
             }
             return View();
         }

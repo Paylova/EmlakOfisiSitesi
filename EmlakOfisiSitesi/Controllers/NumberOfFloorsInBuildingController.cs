@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class NumberOfFloorsInBuildingController : Controller
     {
 

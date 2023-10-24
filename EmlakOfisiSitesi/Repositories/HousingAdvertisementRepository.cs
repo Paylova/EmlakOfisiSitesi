@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmlakOfisiSitesi.Repositories
 {
-    public class HousingAdvertisementRepository : IRepository<HousingAdvertisement>
+    public class HousingAdvertisementRepository : IRepository<HousingAdvertisement>, IHousingAdvertisementRepository<HousingAdvertisement>
     {
         private readonly Models.DbContext _context;
 
@@ -26,12 +26,49 @@ namespace EmlakOfisiSitesi.Repositories
 
         public IEnumerable<HousingAdvertisement> GetAll()
         {
-            return _context.HousingAdvertisements;
+            return _context.HousingAdvertisements
+                .Include(ha => ha.Agent)
+                .Include(ha => ha.City)
+                .Include(ha => ha.DeedStatus)
+                .Include(ha => ha.Facade)
+                .Include(ha => ha.FloorLocation)
+                .Include(ha => ha.HeatingType)
+                .Include(ha => ha.HousingType)
+                .Include(ha => ha.UsageStatus)
+                .Include(ha => ha.HousingAdvertisementPhotos)
+                .Include(ha => ha.District);
+                
+
         }
 
         public HousingAdvertisement GetById(Guid id)
         {
-            return _context.HousingAdvertisements.Find(id);
+            return _context.HousingAdvertisements
+                .Include(ha => ha.Agent)
+                .Include(ha => ha.City)
+                .Include(ha => ha.DeedStatus)
+                .Include(ha => ha.Facade)
+                .Include(ha => ha.FloorLocation)
+                .Include(ha => ha.HeatingType)
+                .Include(ha => ha.HousingType)
+                .Include(ha => ha.UsageStatus)
+                .Include(ha => ha.HousingAdvertisementPhotos)
+                .Include(ha => ha.District).FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<HousingAdvertisement> GetHousingAdvertisementsWithUserId(Guid Id)
+        {
+            return _context.HousingAdvertisements
+                .Include(ha => ha.Agent)
+                .Include(ha => ha.City)
+                .Include(ha => ha.DeedStatus)
+                .Include(ha => ha.Facade)
+                .Include(ha => ha.FloorLocation)
+                .Include(ha => ha.HeatingType)
+                .Include(ha => ha.HousingType)
+                .Include(ha => ha.UsageStatus)
+                .Include(ha => ha.HousingAdvertisementPhotos)
+                .Include(ha => ha.District).Where(x => x.Agent.Id == Id.ToString());
         }
 
         public async Task Remove(HousingAdvertisement entity)

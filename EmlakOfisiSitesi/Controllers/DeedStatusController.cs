@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class DeedStatusController : Controller
     {
         private readonly IRepository<DeedStatus> _deedStatusRepository;

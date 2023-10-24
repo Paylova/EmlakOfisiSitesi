@@ -63,6 +63,7 @@ namespace EmlakOfisiSitesi
             builder.Services.AddScoped<IRepository<HeatingType>, HeatingTypeRepository>();
             builder.Services.AddScoped<IRepository<HousingAdvertisementPhoto>, HousingAdvertisementPhotoRepository>();
             builder.Services.AddScoped<IRepository<HousingAdvertisement>, HousingAdvertisementRepository>();
+            builder.Services.AddScoped<IHousingAdvertisementRepository<HousingAdvertisement>,HousingAdvertisementRepository>();
             builder.Services.AddScoped<IRepository<HousingType>, HousingTypeRepository>();
             builder.Services.AddScoped<IRepository<NumberOfBathroom>, NumberOfBathroomRepository>();
             builder.Services.AddScoped<IRepository<NumberOfFloorsInBuilding>, NumberOfFloorsInBuildingRepository>();
@@ -70,6 +71,7 @@ namespace EmlakOfisiSitesi
             builder.Services.AddScoped<IRepository<UsageStatus>, UsageStatusRepository>();
             builder.Services.AddScoped<IRepository<City>, CityRepository>();
             builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
+            //builder.Services.AddScoped<IRepository<Agent>, AgentRepository>();
 
             builder.Services.AddScoped<IFileManager, FileManager>();
 

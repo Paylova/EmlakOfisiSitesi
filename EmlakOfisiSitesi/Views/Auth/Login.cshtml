@@ -13,6 +13,7 @@
         <input type="password" class="form-control" asp-for="Password">
     </div>
     <button type="submit" class="btn btn-primary">Giriş Yap</button>
+    <a asp-action="Register" asp-controller="Auth" class="btn btn-close-white">Emlakçı Olarak Kayıt Ol</a>
 </form>
 
 @section scripts {
@@ -22,11 +23,11 @@
         {
             var errorMessage = TempData["ErrorMessage"].ToString();
             <text>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Hata',
-                        text: '@Html.Raw(errorMessage.Replace("'", "\\'"))'
-                    });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata',
+                    text: '@Html.Raw(errorMessage.Replace("'", "\\'"))'
+                });
             </text>
         }
     </script>

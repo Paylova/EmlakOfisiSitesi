@@ -1,8 +1,9 @@
 ﻿@model HousingAdvertisementViewModel
 @{
-    ViewData["Title"] = "Satılık İlan Ekle";
+    ViewData["Title"] = "Satılık Konut İlanı Oluştur";
     Layout = "~/Views/Shared/_AdminLayot.cshtml";
 }
+
 <form asp-action="CreateSale" asp-controller="HousingAdvertisement" style="margin-bottom:15px;margin-top:15px" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6" style="margin-bottom:15px">
@@ -15,7 +16,7 @@
             <textarea rows="4" asp-for="Description" class="form-control">
 
             </textarea>
-            <span asp-validation-for="Title" style="color:red"></span>
+            <span asp-validation-for="Description" style="color:red"></span>
         </div>
         <div class="col-md-6" style="margin-bottom:15px">
             <label>Fiyat</label>
@@ -95,8 +96,6 @@
                 <option value="false">Hayır</option>
             </select>
         </div>
-
-
         <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
             <select asp-for="HousingTypeId" asp-items="@(new SelectList(Model.HousingTypes, "Value", "Text"))" class="form-control" data-placeholder="Konut Tipi">
                 <option value="">-- Konut Tipi Seçin --</option>
@@ -160,12 +159,8 @@
             </div>
         </div>
 
-
-
-
-
         <div class="col-md-12">
-            <button type="submit" class="btn btn-success" style="width:100%">Ekle</button>
+            <button type="submit" class="btn btn-success" style="width:100%">Yayınla</button>
         </div>
     </div>
 </form>

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class FloorLocationController : Controller
     {
         private readonly IRepository<FloorLocation> _floorLocationRepository;

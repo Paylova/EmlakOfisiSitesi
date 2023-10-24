@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class DateOfAdvertisementController : Controller
     {
         private readonly IRepository<DateOfAdvertisement> _dateOfAdvertisementRepository;

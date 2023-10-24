@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
+    [Authorize]
     public class NumberOfBathroomController : Controller
     {
         private readonly IRepository<NumberOfBathroom> _numberOfBathroomRepository;

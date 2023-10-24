@@ -22,7 +22,7 @@ namespace EmlakOfisiSitesi.Models.Entities
         public UsageStatus UsageStatus { get; set; }
         public Facade Facade { get; set; }
         public decimal Dues { get; set; }
-        public DeedStatus DeedStatus { get; set; }
+        public DeedStatus? DeedStatus { get; set; }
         public bool IsSuitableForTrade { get; set; }
         public bool IsOnSite { get; set; }
         public decimal RentalIncome { get; set; }

@@ -1,0 +1,149 @@
+﻿@model HousingAdvertisementViewModel
+@{
+    ViewData["Title"] = "Kiralık Konut İlanı Oluştur";
+    Layout = "~/Views/Shared/_AdminLayot.cshtml";
+}
+
+<form asp-action="CreateRent" asp-controller="HousingAdvertisement" style="margin-bottom:15px;margin-top:15px" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>İlan Başlığı</label>
+            <input type="text" asp-for="Title" class="form-control" placeholder="İlan Başlığı">
+            <span asp-validation-for="Title" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>İlan Açıklaması</label>
+            <textarea rows="4" asp-for="Description" class="form-control">
+
+            </textarea>
+            <span asp-validation-for="Description" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Fiyat</label>
+            <input type="number" asp-for="Price" class="form-control" placeholder="Fiyat">
+            <span asp-validation-for="Price" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Oda Sayısı</label>
+            <input type="number" asp-for="RoomNumber" class="form-control" placeholder="Oda Sayısı">
+            <span asp-validation-for="RoomNumber" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Salon Sayısı</label>
+            <input type="number" asp-for="HallNumber" class="form-control" placeholder="Salon Sayısı">
+            <span asp-validation-for="HallNumber" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Banyo Sayısı</label>
+            <input type="number" asp-for="BathroomNumber" class="form-control" placeholder="Banyo Sayısı">
+            <span asp-validation-for="BathroomNumber" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Bürüt Metre Kare</label>
+            <input type="number" asp-for="GrossSquareMeters" class="form-control" placeholder="Bürüt Metre Kare">
+            <span asp-validation-for="GrossSquareMeters" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Net Metre Kare</label>
+            <input type="number" asp-for="NetSquareMeters" class="form-control" placeholder="Net Metre Kare">
+            <span asp-validation-for="NetSquareMeters" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Bina Yaşı</label>
+            <input type="number" asp-for="BuildingAge" class="form-control" placeholder="Bina Yaşı">
+            <span asp-validation-for="BuildingAge" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Kat Sayısı</label>
+            <input type="number" asp-for="FloorNumber" class="form-control" placeholder="Kat Sayısı">
+            <span asp-validation-for="FloorNumber" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Depozito</label>
+            <input type="number" asp-for="Deposit" class="form-control" placeholder="Depozito">
+            <span asp-validation-for="Deposit" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label>Aidat</label>
+            <input type="number" asp-for="Dues" class="form-control" placeholder="Aidat">
+            <span asp-validation-for="Dues" style="color:red"></span>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label for="isFurnished">Eşyalı Durumu:</label>
+            <select id="isFurnished" name="isFurnished" class="form-control" asp-for="IsFurnished">
+                <option value="true">Eşyalı</option>
+                <option value="false">Eşyasız</option>
+            </select>
+        </div>
+        <div class="col-md-6" style="margin-bottom:15px">
+            <label for="isOnSite">Site İçinde</label>
+            <select id="isOnSite" name="isOnSite" class="form-control" asp-for="IsOnSite">
+                <option value="true">Evet</option>
+                <option value="false">Hayır</option>
+            </select>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="HousingTypeId" asp-items="@(new SelectList(Model.HousingTypes, "Value", "Text"))" class="form-control" data-placeholder="Konut Tipi">
+                <option value="">-- Konut Tipi Seçin --</option>
+            </select>
+            <span asp-validation-for="HousingTypeId" class="text-danger"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="HeatingTypeId" asp-items="@(new SelectList(Model.HeatingTypes, "Value", "Text"))" class="form-control" data-placeholder="Isınma Tipi">
+                <option value="">-- Isınma Tipi Seçin --</option>
+            </select>
+            <span asp-validation-for="HeatingTypeId" class="text-danger"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="FloorLocationId" asp-items="@(new SelectList(Model.FloorLocations, "Value", "Text"))" class="form-control" data-placeholder="Bulunduğu Kat">
+                <option value="">-- Bulunduğu Katı Seçin --</option>
+            </select>
+            <span asp-validation-for="FloorLocationId" class="text-danger"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="UsageStatusId" asp-items="@(new SelectList(Model.UsageStatues, "Value", "Text"))" class="form-control" data-placeholder="Kullanım Durumu">
+                <option value="">-- Kullanım Durumu Seçin --</option>
+            </select>
+            <span asp-validation-for="UsageStatusId" class="text-danger"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="FacadeId" asp-items="@(new SelectList(Model.Facades, "Value", "Text"))" class="form-control" data-placeholder="Cephe">
+                <option value="">-- Cephe Seçin --</option>
+            </select>
+            <span asp-validation-for="FacadeId" class="text-danger"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="CityId" asp-items="@(new SelectList(Model.Cities, "Value", "Text"))" class="form-control" data-placeholder="İl Seçin">
+                <option value="">-- İl Seçin --</option>
+            </select>
+            <span asp-validation-for="CityId" class="text-danger"></span>
+        </div>
+        <div action="col-md-12" style="margin-bottom:15px;margin-left:15px;margin-right:15px;width:100%;">
+            <select asp-for="DistrictId" asp-items="@(new SelectList(Model.Districts, "Value", "Text"))" class="form-control" data-placeholder="İlçe Seçin">
+                <option value="">-- İlçe Seçin --</option>
+            </select>
+            <span asp-validation-for="DistrictId" class="text-danger"></span>
+        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <label>Adres</label>
+            <textarea rows="4" asp-for="Address" class="form-control">
+
+            </textarea>
+            <span asp-validation-for="Address" style="color:red"></span>
+        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02" asp-for="HousingAdvertisementPhotos" multiple>
+                <label class="input-group-text" for="inputGroupFile02">Yükle</label>
+                <span asp-validation-for="HousingAdvertisementPhotos" style="color:red"></span>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success" style="width:100%">Yayınla</button>
+        </div>
+    </div>
+</form>
+
+
+

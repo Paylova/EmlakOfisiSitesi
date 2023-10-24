@@ -7,28 +7,28 @@
     </h6>
     <ul class="nav flex-column mb-2">
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text"></span>
-                Current month
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-action="Create" asp-controller="HousingAdvertisement">
+            <a class="nav-link" asp-action="List" asp-controller="HousingAdvertisement">
                 <span data-feather="plus-circle"></span>
-                İlan Ekle
+                İlanlarım
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text"></span>
-                Social engagement
+            <a class="nav-link" asp-action="CreateSale" asp-controller="HousingAdvertisement">
+                <span data-feather="plus-circle"></span>
+                Satılık İlan Ekle
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text"></span>
-                Year-end sale
+            <a class="nav-link" asp-action="CreateRent" asp-controller="HousingAdvertisement">
+                <span data-feather="plus-circle"></span>
+                Kiralık İlan Ekle
             </a>
         </li>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Emlak Sitesine Git</span>
+            <a class="d-flex align-items-center text-muted" asp-action="List" asp-controller="Home" aria-label="Add a new report">
+                <span data-feather="home"></span>
+            </a>
+        </h6>
     </ul>
 </div>

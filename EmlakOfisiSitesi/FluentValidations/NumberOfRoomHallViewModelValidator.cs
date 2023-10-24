@@ -9,7 +9,7 @@ namespace EmlakOfisiSitesi.FluentValidations
         {
             RuleFor(model => model.Name).NotEmpty().WithMessage("Oda ve salon adı boş olamaz.");
             RuleFor(model => model.RoomNumber).NotEmpty().WithMessage("Oda sayısı girin.");
-            RuleFor(model => model.HallNumber).NotEmpty().WithMessage("salon sayısı girin.");
+            //RuleFor(model => model.HallNumber).NotEmpty().WithMessage("salon sayısı girin.");
         }
     }
 }

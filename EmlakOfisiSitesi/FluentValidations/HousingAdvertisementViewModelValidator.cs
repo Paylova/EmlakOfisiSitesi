@@ -65,9 +65,6 @@ namespace EmlakOfisiSitesi.FluentValidations
             RuleFor(model => model.FacadeId)
                 .NotEmpty().WithMessage("Cephe tipi seçmelisiniz.");
 
-            RuleFor(model => model.DeedStatusId)
-                .NotEmpty().WithMessage("Tapu durumu seçmelisiniz.");
-
             RuleFor(model => model.DistrictId)
                 .NotEmpty().WithMessage("İlçe seçmelisiniz.");
 

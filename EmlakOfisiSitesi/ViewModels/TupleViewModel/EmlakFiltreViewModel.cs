@@ -5,6 +5,7 @@ namespace EmlakOfisiSitesi.ViewModels.TupleViewModel
 {
     public class EmlakFiltreViewModel
     {
+        public IEnumerable<Agent> Agents { get; set; }
         public IEnumerable<HousingAdvertisement> HousingAdvertisements { get; set; }
         public IEnumerable<BuildingAge> BuildingAges { get; set; }
         public IEnumerable<DateOfAdvertisement> DateOfAdvertisements { get; set; }

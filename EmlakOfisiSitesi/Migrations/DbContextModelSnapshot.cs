@@ -256,7 +256,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeedStatusId")
+                    b.Property<Guid?>("DeedStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Deposit")
@@ -836,9 +836,7 @@ namespace EmlakOfisiSitesi.Migrations
 
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.DeedStatus", "DeedStatus")
                         .WithMany()
-                        .HasForeignKey("DeedStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DeedStatusId");
 
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.District", "District")
                         .WithMany()

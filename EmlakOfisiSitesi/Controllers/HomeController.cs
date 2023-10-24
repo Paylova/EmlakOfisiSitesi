@@ -43,35 +43,40 @@ namespace EmlakOfisiSitesi.Controllers
         [HttpGet]
         public IActionResult List()
         {
-            IEnumerable<HousingAdvertisement> housingAdvertisements = _housingAdvertisementRepository.GetAll();
-            IEnumerable<BuildingAge> buildingAges = _buildingAgeRepository.GetAll();
-            IEnumerable<DateOfAdvertisement> dateOfAdvertisements = _dateOfAdvertisementRepository.GetAll();
-            IEnumerable<DeedStatus> deedStatuses = _deedStatusRepository.GetAll();
-            IEnumerable<Facade> facades = _facadeRepository.GetAll();
-            IEnumerable<FloorLocation> floorLocations = _floorLocationRepository.GetAll();
-            IEnumerable<HeatingType> heatingTypes = _heatingTypeRepository.GetAll();
-            IEnumerable<HousingType> housingTypes = _housingTypeRepository.GetAll();
-            IEnumerable<NumberOfBathroom> numberOfBathrooms = _numberOfBathroomRepository.GetAll();
-            IEnumerable<NumberOfFloorsInBuilding> numberOfFloorsInBuildings = _numberOfFloorsInBuildingRepository.GetAll();
-            IEnumerable<NumberOfRoomHall> numberOfRoomHalls = _numberOfRoomHallRepository.GetAll();
-            IEnumerable<UsageStatus> usageStatuses = _usageStatusRepository.GetAll();
 
-            EmlakFiltreViewModel viewModel = new EmlakFiltreViewModel
-            {
-                BuildingAges = buildingAges,
-                DateOfAdvertisements = dateOfAdvertisements,
-                DeedStatuses = deedStatuses,
-                Fades = facades,
-                FloorLocations = floorLocations,
-                HeatingTypes = heatingTypes,
-                HousingTypes = housingTypes,
-                NumberOfBathrooms = numberOfBathrooms,
-                HousingAdvertisements = housingAdvertisements,
-                NumberOfFloorsInBuildings = numberOfFloorsInBuildings,
-                UsageStatuses = usageStatuses,
-                NumberOfRoomHalls = numberOfRoomHalls,
-            };
-            return View(viewModel);
+            IEnumerable<HousingAdvertisement> housingAdvertisements = _housingAdvertisementRepository.GetAll();
+            return View(housingAdvertisements);
+
+
+            //IEnumerable<HousingAdvertisement> housingAdvertisements = _housingAdvertisementRepository.GetAll();
+            //IEnumerable<BuildingAge> buildingAges = _buildingAgeRepository.GetAll();
+            //IEnumerable<DateOfAdvertisement> dateOfAdvertisements = _dateOfAdvertisementRepository.GetAll();
+            //IEnumerable<DeedStatus> deedStatuses = _deedStatusRepository.GetAll();
+            //IEnumerable<Facade> facades = _facadeRepository.GetAll();
+            //IEnumerable<FloorLocation> floorLocations = _floorLocationRepository.GetAll();
+            //IEnumerable<HeatingType> heatingTypes = _heatingTypeRepository.GetAll();
+            //IEnumerable<HousingType> housingTypes = _housingTypeRepository.GetAll();
+            //IEnumerable<NumberOfBathroom> numberOfBathrooms = _numberOfBathroomRepository.GetAll();
+            //IEnumerable<NumberOfFloorsInBuilding> numberOfFloorsInBuildings = _numberOfFloorsInBuildingRepository.GetAll();
+            //IEnumerable<NumberOfRoomHall> numberOfRoomHalls = _numberOfRoomHallRepository.GetAll();
+            //IEnumerable<UsageStatus> usageStatuses = _usageStatusRepository.GetAll();
+
+            //EmlakFiltreViewModel viewModel = new EmlakFiltreViewModel
+            //{
+            //    BuildingAges = buildingAges,
+            //    DateOfAdvertisements = dateOfAdvertisements,
+            //    DeedStatuses = deedStatuses,
+            //    Fades = facades,
+            //    FloorLocations = floorLocations,
+            //    HeatingTypes = heatingTypes,
+            //    HousingTypes = housingTypes,
+            //    NumberOfBathrooms = numberOfBathrooms,
+            //    HousingAdvertisements = housingAdvertisements,
+            //    NumberOfFloorsInBuildings = numberOfFloorsInBuildings,
+            //    UsageStatuses = usageStatuses,
+            //    NumberOfRoomHalls = numberOfRoomHalls,
+            //};
+            //return View(viewModel);
         }
     }
 }

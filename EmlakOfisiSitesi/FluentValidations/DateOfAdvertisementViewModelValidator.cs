@@ -8,7 +8,7 @@ namespace EmlakOfisiSitesi.FluentValidations
         public DateOfAdvertisementViewModelValidator()
         {
             RuleFor(model => model.Name).NotEmpty().WithMessage("Ad alanı boş olamaz.");
-            RuleFor(model => model.Day).NotEmpty().WithMessage("Gün sayısı 0'dan büyük olmalıdır.");
+            //RuleFor(model => model.Day).NotEmpty().WithMessage("Gün sayısı 0'dan büyük olmalıdır.");
         }
     }
 }
