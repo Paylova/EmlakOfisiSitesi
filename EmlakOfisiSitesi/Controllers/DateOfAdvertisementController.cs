@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class DateOfAdvertisementController : Controller
     {
         private readonly IRepository<DateOfAdvertisement> _dateOfAdvertisementRepository;
@@ -25,7 +25,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<DateOfAdvertisement> dateOfAdvertisements = _dateOfAdvertisementRepository.GetAll();
@@ -34,14 +33,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(DateOfAdvertisementViewModel dateOfAdvertisementViewModel)
         {
             var validationResult = await _dateOfAdvertisementValidator.ValidateAsync(dateOfAdvertisementViewModel);
@@ -67,13 +64,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             DateOfAdvertisement dateOfAdvertisement = _dateOfAdvertisementRepository.GetById(id);
 
-            if (dateOfAdvertisement == null)
-                return NotFound();
+            if (dateOfAdvertisement == null) return NotFound();
 
             DateOfAdvertisementViewModel dateOfAdvertisementViewModel = new DateOfAdvertisementViewModel
             {
@@ -87,7 +82,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(DateOfAdvertisementViewModel dateOfAdvertisementViewModel)
         {
             var validationResult = await _dateOfAdvertisementValidator.ValidateAsync(dateOfAdvertisementViewModel);
@@ -111,13 +105,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             DateOfAdvertisement dateOfAdvertisement = _dateOfAdvertisementRepository.GetById(id);
 
-            if (dateOfAdvertisement == null)
-                return NotFound();
+            if (dateOfAdvertisement == null) return NotFound();
 
             await _dateOfAdvertisementRepository.Remove(dateOfAdvertisement);
 

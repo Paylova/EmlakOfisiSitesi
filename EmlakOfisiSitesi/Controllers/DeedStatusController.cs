@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class DeedStatusController : Controller
     {
         private readonly IRepository<DeedStatus> _deedStatusRepository;
@@ -20,9 +20,8 @@ namespace EmlakOfisiSitesi.Controllers
             _deedStatusValidator = deedStatusValidator;
         }
 
-
         [HttpGet]
-        [Authorize(Policy = "Admin")]
+
         public IActionResult List()
         {
             IEnumerable<DeedStatus> deedStatuses = _deedStatusRepository.GetAll();
@@ -31,18 +30,15 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(DeedStatusViewModel deedStatusViewModel)
         {
             var validationResult = await _deedStatusValidator.ValidateAsync(deedStatusViewModel);
-
 
             if (!validationResult.IsValid)
             {
@@ -65,13 +61,11 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             DeedStatus deedStatus = _deedStatusRepository.GetById(id);
 
-            if (deedStatus == null)
-                return NotFound();
+            if (deedStatus == null) return NotFound();
 
             DeedStatusViewModel deedStatusViewModel = new DeedStatusViewModel
             {
@@ -84,11 +78,9 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(DeedStatusViewModel deedStatusViewModel)
         {
             var validationResult = await _deedStatusValidator.ValidateAsync(deedStatusViewModel);
-
 
             if (!validationResult.IsValid)
             {
@@ -108,13 +100,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             DeedStatus deedStatus = _deedStatusRepository.GetById(id);
 
-            if (deedStatus == null)
-                return NotFound();
+            if (deedStatus == null) return NotFound();
 
             await _deedStatusRepository.Remove(deedStatus);
 

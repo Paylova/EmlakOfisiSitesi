@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class NumberOfRoomHallController : Controller
     {
         private readonly IRepository<NumberOfRoomHall> _numberOfRoomHallRepository;
@@ -22,7 +22,6 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<NumberOfRoomHall> numberOfRoomHalls = _numberOfRoomHallRepository.GetAll();
@@ -31,14 +30,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(NumberOfRoomHallViewModel numberOfRoomHallViewModel)
         {
             var validationResult = await _numberOfRoomHallValidator.ValidateAsync(numberOfRoomHallViewModel);
@@ -67,13 +64,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             NumberOfRoomHall numberOfRoomHall = _numberOfRoomHallRepository.GetById(id);
 
-            if (numberOfRoomHall == null)
-                return NotFound();
+            if (numberOfRoomHall == null) return NotFound();
 
             NumberOfRoomHallViewModel numberOfRoomHallViewModel = new NumberOfRoomHallViewModel
             {
@@ -89,7 +84,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(NumberOfRoomHallViewModel numberOfRoomHallViewModel)
         {
             var validationResult = await _numberOfRoomHallValidator.ValidateAsync(numberOfRoomHallViewModel);
@@ -116,13 +110,11 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             NumberOfRoomHall numberOfRoomHall = _numberOfRoomHallRepository.GetById(id);
 
-            if (numberOfRoomHall == null)
-                return NotFound();
+            if (numberOfRoomHall == null) return NotFound();
 
             await _numberOfRoomHallRepository.Remove(numberOfRoomHall);
 

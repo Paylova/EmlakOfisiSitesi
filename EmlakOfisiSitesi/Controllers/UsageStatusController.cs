@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class UsageStatusController : Controller
     {
         private readonly IRepository<UsageStatus> _usageStatusRepository;
@@ -21,7 +21,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<UsageStatus> usageStatuses = _usageStatusRepository.GetAll();
@@ -30,14 +29,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(UsageStatusViewModel usageStatusViewModel)
         {
             var validationResult = await _usageStatusValidator.ValidateAsync(usageStatusViewModel);
@@ -62,13 +59,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             UsageStatus usageStatus = _usageStatusRepository.GetById(id);
 
-            if (usageStatus == null)
-                return NotFound();
+            if (usageStatus == null) return NotFound();
 
             UsageStatusViewModel usageStatusViewModel = new UsageStatusViewModel
             {
@@ -81,7 +76,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(UsageStatusViewModel usageStatusViewModel)
         {
             var validationResult = await _usageStatusValidator.ValidateAsync(usageStatusViewModel);
@@ -104,13 +98,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             UsageStatus usageStatus = _usageStatusRepository.GetById(id);
 
-            if (usageStatus == null)
-                return NotFound();
+            if (usageStatus == null) return NotFound();
 
             await _usageStatusRepository.Remove(usageStatus);
 

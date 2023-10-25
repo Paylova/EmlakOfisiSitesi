@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class HeatingTypeController : Controller
     {
         private readonly IRepository<HeatingType> _heatingTypeRepository;
@@ -22,7 +22,6 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<HeatingType> heatingTypes = _heatingTypeRepository.GetAll();
@@ -31,14 +30,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(HeatingTypeViewModel heatingTypeViewModel)
         {
             var validationResult = await _heatingTypeValidator.ValidateAsync(heatingTypeViewModel);
@@ -55,7 +52,6 @@ namespace EmlakOfisiSitesi.Controllers
             {
                 Name = heatingTypeViewModel.Name,
                 IsActive = false
-
             };
 
             await _heatingTypeRepository.Add(heatingType);
@@ -63,15 +59,12 @@ namespace EmlakOfisiSitesi.Controllers
             return RedirectToAction("List", "HeatingType");
         }
 
-
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             HeatingType heatingType = _heatingTypeRepository.GetById(id);
 
-            if (heatingType == null)
-                return NotFound();
+            if (heatingType == null) return NotFound();
 
             HeatingTypeViewModel heatingTypeViewModel = new HeatingTypeViewModel
             {
@@ -84,7 +77,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(HeatingTypeViewModel heatingTypeViewModel)
         {
             var validationResult = await _heatingTypeValidator.ValidateAsync(heatingTypeViewModel);
@@ -106,15 +98,12 @@ namespace EmlakOfisiSitesi.Controllers
             return RedirectToAction("List", "HeatingType");
         }
 
-
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             HeatingType heatingType = _heatingTypeRepository.GetById(id);
 
-            if (heatingType == null)
-                return NotFound();
+            if (heatingType == null) return NotFound();
 
             await _heatingTypeRepository.Remove(heatingType);
 

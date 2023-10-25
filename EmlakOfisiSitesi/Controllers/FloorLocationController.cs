@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class FloorLocationController : Controller
     {
         private readonly IRepository<FloorLocation> _floorLocationRepository;
@@ -21,7 +21,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<FloorLocation> floorLocations = _floorLocationRepository.GetAll();
@@ -30,14 +29,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(FloorLocationViewModel floorLocationViewModel)
         {
             var validationResult = await _floorLocationValidator.ValidateAsync(floorLocationViewModel);
@@ -63,13 +60,11 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             FloorLocation floorLocation = _floorLocationRepository.GetById(id);
 
-            if (floorLocation == null)
-                return NotFound();
+            if (floorLocation == null) return NotFound();
 
             FloorLocationViewModel floorLocationViewModel = new FloorLocationViewModel
             {
@@ -83,7 +78,6 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(FloorLocationViewModel floorLocationViewModel)
         {
             var validationResult = await _floorLocationValidator.ValidateAsync(floorLocationViewModel);
@@ -107,13 +101,11 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             FloorLocation floorLocation = _floorLocationRepository.GetById(id);
 
-            if (floorLocation == null)
-                return NotFound();
+            if (floorLocation == null) return NotFound();
 
             await _floorLocationRepository.Remove(floorLocation);
 

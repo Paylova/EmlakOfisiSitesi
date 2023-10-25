@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class DistrictController : Controller
     {
         private readonly IRepository<District> _districtRepository;
@@ -24,7 +24,7 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
+
         public IActionResult List()
         {
             IEnumerable<District> districts = _districtRepository.GetAll();
@@ -33,7 +33,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             var cities = _cityRepository.GetAll();
@@ -45,11 +44,11 @@ namespace EmlakOfisiSitesi.Controllers
                     Value = c.Id.ToString()
                 })
             };
+
             return View(districtViewModel);
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(DistrictViewModel districtViewModel)
         {
             var validationResult = await _districtValidator.ValidateAsync(districtViewModel);
@@ -65,8 +64,10 @@ namespace EmlakOfisiSitesi.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });
+
                 return View(districtViewModel);
             }
+
             City city = _cityRepository.GetById(districtViewModel.CityId);
             District district = new District
             {
@@ -81,15 +82,13 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
-
             District district = _districtRepository.GetById(id);
-            var cities = _cityRepository.GetAll();
 
-            if (district == null)
-                return NotFound();
+            if (district == null) return NotFound();
+
+            var cities = _cityRepository.GetAll();
 
             DistrictViewModel districtViewModel = new DistrictViewModel
             {
@@ -108,7 +107,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(DistrictViewModel districtViewModel)
         {
             var validationResult = await _districtValidator.ValidateAsync(districtViewModel);
@@ -124,8 +122,10 @@ namespace EmlakOfisiSitesi.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });
+
                 return View(districtViewModel);
             }
+
             City city = _cityRepository.GetById(districtViewModel.CityId);
             District district = _districtRepository.GetById(districtViewModel.Id);
             district.Name = districtViewModel.Name;
@@ -138,13 +138,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             District district = _districtRepository.GetById(id);
 
-            if (district == null)
-                return NotFound();
+            if (district == null) return NotFound();
 
             await _districtRepository.Remove(district);
 

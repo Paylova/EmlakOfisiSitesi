@@ -62,8 +62,10 @@ namespace EmlakOfisiSitesi.Controllers
         public IActionResult List(EmlakFiltreViewModel filterDatas)
         {
             IEnumerable<HousingAdvertisement> housingAdvertisements = UseFilter(filterDatas);
+
             var viewModel = GetAllFilterList();
             var result = new Tuple<IEnumerable<HousingAdvertisement>, EmlakFiltreViewModel>(housingAdvertisements, viewModel);
+
             return View(result);
         }
 
@@ -73,15 +75,15 @@ namespace EmlakOfisiSitesi.Controllers
             if (id != Guid.Empty)
             {
                 HousingAdvertisement housingAdvertisement = _housingAdvertisementRepository.GetById(id);
+
                 return View(housingAdvertisement);
             }
+
             return View();
         }
 
         public IEnumerable<HousingAdvertisement> UseFilter(EmlakFiltreViewModel filterDatas)
         {
-            //using (_context)
-            //{
             var query = _context.HousingAdvertisements
            .Include(a => a.HousingType)
            .Include(a => a.HeatingType)
@@ -94,7 +96,6 @@ namespace EmlakOfisiSitesi.Controllers
            .Include(a => a.Facade)
            .Include(a => a.UsageStatus)
            .AsQueryable();
-            //var query = _context.HousingAdvertisements.AsQueryable();
 
             if (filterDatas.MinPrice > 0 || filterDatas.MaxPrice > 0)
             {
@@ -184,12 +185,10 @@ namespace EmlakOfisiSitesi.Controllers
                 {
                     if (buildingAge.IsAndOver)
                     {
-                        // Eğer IsAndOver seçiliyse, belirli bir yaşın üstündeki binaları getir.
                         query = query.Where(a => a.BuildingAge >= buildingAge.Min);
                     }
                     else
                     {
-                        // Eğer IsAndOver seçili değilse, belirli bir yaş aralığındaki binaları getir.
                         query = query.Where(a => a.BuildingAge >= buildingAge.Min && a.BuildingAge <= buildingAge.Max);
                     }
                 }
@@ -230,12 +229,10 @@ namespace EmlakOfisiSitesi.Controllers
                 {
                     if (numberOfRoomHall.IsAndOver)
                     {
-                        // Eğer IsAndOver seçiliyse, RoomNumber eşit ve HallNumber eşit veya üstündeki olanları getir.
                         query = query.Where(a => a.RoomNumber == numberOfRoomHall.RoomNumber && a.HallNumber >= numberOfRoomHall.HallNumber);
                     }
                     else
                     {
-                        // Eğer IsAndOver seçili değilse, RoomNumber ve HallNumber'a eşit olanları getir.
                         query = query.Where(a => a.RoomNumber == numberOfRoomHall.RoomNumber && a.HallNumber == numberOfRoomHall.HallNumber);
                     }
                 }
@@ -247,22 +244,16 @@ namespace EmlakOfisiSitesi.Controllers
 
                 if (dateOfAdvertisement != null)
                 {
-                    // İlanın oluşturulma tarihi ile filtrelenmesi
                     var targetDate = DateTime.Now.Date.AddDays(-dateOfAdvertisement.Day);
                     query = query.Where(a => a.CreatedDate >= targetDate);
                 }
             }
 
-
-
             return query.ToList();
-            //}
-
         }
 
         public EmlakFiltreViewModel GetAllFilterList()
         {
-
             IEnumerable<BuildingAge> buildingAges = _buildingAgeRepository.GetAll();
             IEnumerable<DateOfAdvertisement> dateOfAdvertisements = _dateOfAdvertisementRepository.GetAll();
             IEnumerable<DeedStatus> deedStatuses = _deedStatusRepository.GetAll();
@@ -293,6 +284,7 @@ namespace EmlakOfisiSitesi.Controllers
                 Cities = cities.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }),
                 Districts = districts.Select(d => new SelectListItem { Text = d.Name, Value = d.Id.ToString() }),
             };
+
             return viewModel;
         }
     }

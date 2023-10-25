@@ -32,6 +32,7 @@ namespace EmlakOfisiSitesi.Controllers
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("List", "Home");
+
             return View(new LoginViewModel());
         }
 
@@ -42,43 +43,33 @@ namespace EmlakOfisiSitesi.Controllers
             if (!validationResult.IsValid)
             {
                 foreach (var error in validationResult.Errors)
-                {
                     ModelState.AddModelError("", error.ErrorMessage);
-                }
 
                 return View(loginViewModel);
             }
+
             var result = await _signInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, false, false);
+
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
-                
+
                 if (user != null)
                 {
                     var userId = user.Id;
 
                     Response.Cookies.Append("userId", userId);
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id)
-                    };
 
+                    var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, user.Id) };
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var authProperties = new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
-                    };
+                    var authProperties = new AuthenticationProperties { IsPersistent = true, ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) };
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
                     var userRoles = await _userManager.GetRolesAsync(user);
-                    if (userRoles.Contains("Admin"))                    
-                        return RedirectToAction("List", "BuildingAge");                   
-                    else                    
-                        return RedirectToAction("List", "HousingAdvertisement");
-                    
+                    if (userRoles.Contains("Admin"))
+                        return RedirectToAction("List", "BuildingAge");
 
-
+                    return RedirectToAction("List", "HousingAdvertisement");
                 }
                 return NotFound();
             }
@@ -93,10 +84,10 @@ namespace EmlakOfisiSitesi.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+
             if (Request.Cookies.ContainsKey("userId"))
-            {
                 Response.Cookies.Delete("userId");
-            }
+
             return RedirectToAction("List", "Home");
         }
 
@@ -105,19 +96,20 @@ namespace EmlakOfisiSitesi.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             var validationResult = await _registerValidator.ValidateAsync(registerViewModel);
+
             if (!validationResult.IsValid)
             {
                 foreach (var error in validationResult.Errors)
-                {
                     ModelState.AddModelError("", error.ErrorMessage);
-                }
 
                 return View(registerViewModel);
             }
+
             var agent = new Agent
             {
                 CompanyName = registerViewModel.CompanyName,
@@ -127,7 +119,9 @@ namespace EmlakOfisiSitesi.Controllers
                 PhoneNumber = registerViewModel.PhoneNumber,
                 Email = registerViewModel.Email,
             };
+
             var result = await _userManager.CreateAsync(agent, "123456");
+
             if (result.Succeeded)
             {
                 if (!await _roleManager.RoleExistsAsync("Agent"))
@@ -136,6 +130,7 @@ namespace EmlakOfisiSitesi.Controllers
                     await _roleManager.CreateAsync(role);
                 }
                 await _userManager.AddToRoleAsync(agent, "Agent");
+
                 return RedirectToAction("Login", "Auth");
             }
             return View();

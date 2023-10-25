@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class AgentController : Controller
     {
         readonly private IRepository<Agent> _agentRepository;
@@ -20,7 +20,7 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
+
         public IActionResult List()
         {
             IEnumerable<Agent> agents = _agentRepository.GetAll();
@@ -29,7 +29,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             Agent agent = _agentRepository.GetById(id);
@@ -51,7 +50,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(AgentViewModel agentViewModel)
         {
             var validationResult = await _agentValidator.ValidateAsync(agentViewModel);
@@ -78,7 +76,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             Agent agent = _agentRepository.GetById(id);

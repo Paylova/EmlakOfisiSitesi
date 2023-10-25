@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class CityController : Controller
     {
         private readonly IRepository<City> _cityRepository;
@@ -21,7 +21,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<City> cities = _cityRepository.GetAll();
@@ -30,14 +29,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(CityViewModel cityViewModel)
         {
             var validationResult = await _cityValidator.ValidateAsync(cityViewModel);
@@ -62,15 +59,12 @@ namespace EmlakOfisiSitesi.Controllers
             return RedirectToAction("List", "City");
         }
 
-
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             City city = _cityRepository.GetById(id);
 
-            if (city == null)
-                return NotFound();
+            if (city == null) return NotFound();
 
             CityViewModel cityViewModel = new CityViewModel
             {
@@ -82,9 +76,7 @@ namespace EmlakOfisiSitesi.Controllers
             return View(cityViewModel);
         }
 
-
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(CityViewModel cityViewModel)
         {
             var validationResult = await _cityValidator.ValidateAsync(cityViewModel);
@@ -107,12 +99,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             City city = _cityRepository.GetById(id);
-            if (city == null)
-                return NotFound();
+
+            if (city == null) return NotFound();
 
             await _cityRepository.Remove(city);
 

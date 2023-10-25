@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class BuildingAgeController : Controller
     {
         private readonly IRepository<BuildingAge> _buildingAgeRepository;
@@ -20,7 +20,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<BuildingAge> buildingAges = _buildingAgeRepository.GetAll();
@@ -29,14 +28,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(BuildingAgeViewModel buildingAgeViewModel)
         {
             var validationResult = await _buildingAgeValidator.ValidateAsync(buildingAgeViewModel);
@@ -64,7 +61,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             BuildingAge buildingAge = _buildingAgeRepository.GetById(id);
@@ -86,7 +82,7 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
+
         public async Task<IActionResult> Update(BuildingAgeViewModel buildingAgeViewModel)
         {
             var validationResult = await _buildingAgeValidator.ValidateAsync(buildingAgeViewModel);
@@ -112,7 +108,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             BuildingAge buildingAge = _buildingAgeRepository.GetById(id);

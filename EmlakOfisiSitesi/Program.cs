@@ -76,10 +76,6 @@ namespace EmlakOfisiSitesi
 
             builder.Services.AddScoped<IFileManager, FileManager>();
 
-
-            //builder.Services.AddScoped<IValidator<BuildingAgeViewModel>,BuildingAgeViewModelValidator>();
-            //builder.Services.AddScoped < IValidator<DateOfAdvertisementViewModel>
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 

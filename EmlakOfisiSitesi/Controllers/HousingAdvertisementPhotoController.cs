@@ -23,7 +23,7 @@ namespace EmlakOfisiSitesi.Controllers
         public IActionResult HousingAdvertisementPhotoEdit(Guid Id)
         {
             HousingAdvertisement housingAdvertisement = _housingAdvertisementRepository.GetById(Id);
-            if(housingAdvertisement == null) { return NotFound(); }
+            if (housingAdvertisement == null) { return NotFound(); }
 
             List<HousingAdvertisementPhoto> housingAdvertisementPhotos = housingAdvertisement.HousingAdvertisementPhotos.ToList();
             ViewBag.HousingAdvertisementId = housingAdvertisement.Id;

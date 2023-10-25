@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class NumberOfBathroomController : Controller
     {
         private readonly IRepository<NumberOfBathroom> _numberOfBathroomRepository;
@@ -21,7 +21,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<NumberOfBathroom> numberOfBathrooms = _numberOfBathroomRepository.GetAll();
@@ -30,14 +29,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(NumberOfBathroomViewModel numberOfBathroomViewModel)
         {
             var validationResult = await _numberOfBathroomValidator.ValidateAsync(numberOfBathroomViewModel);
@@ -64,13 +61,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             NumberOfBathroom numberOfBathroom = _numberOfBathroomRepository.GetById(id);
 
-            if (numberOfBathroom == null)
-                return NotFound();
+            if (numberOfBathroom == null) return NotFound();
 
             NumberOfBathroomViewModel numberOfBathroomViewModel = new NumberOfBathroomViewModel
             {
@@ -85,7 +80,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(NumberOfBathroomViewModel numberOfBathroomViewModel)
         {
             var validationResult = await _numberOfBathroomValidator.ValidateAsync(numberOfBathroomViewModel);
@@ -110,13 +104,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             NumberOfBathroom numberOfBathroom = _numberOfBathroomRepository.GetById(id);
 
-            if (numberOfBathroom == null)
-                return NotFound();
+            if (numberOfBathroom == null) return NotFound();
 
             await _numberOfBathroomRepository.Remove(numberOfBathroom);
 

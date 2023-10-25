@@ -14,14 +14,15 @@ namespace EmlakOfisiSitesi.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var userId = Request.Cookies["userId"];
+
             if (!string.IsNullOrEmpty(userId))
             {
                 var user = await _userManager.FindByIdAsync(userId);
+
                 if (user != null)
-                {
                     return View(user);
-                }
             }
+
             return View();
         }
     }

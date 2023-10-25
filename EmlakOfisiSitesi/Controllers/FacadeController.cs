@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class FacadeController : Controller
     {
         private readonly IRepository<Facade> _facadeRepository;
@@ -21,7 +21,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<Facade> facades = _facadeRepository.GetAll();
@@ -30,14 +29,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(FacadeViewModel facadeViewModel)
         {
             var validationResult = await _facadeValidator.ValidateAsync(facadeViewModel);
@@ -62,13 +59,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             Facade facade = _facadeRepository.GetById(id);
 
-            if (facade == null)
-                return NotFound();
+            if (facade == null) return NotFound();
 
             FacadeViewModel facadeViewModel = new FacadeViewModel
             {
@@ -81,7 +76,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(FacadeViewModel facadeViewModel)
         {
             var validationResult = await _facadeValidator.ValidateAsync(facadeViewModel);
@@ -104,13 +98,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             Facade facade = _facadeRepository.GetById(id);
 
-            if (facade == null)
-                return NotFound();
+            if (facade == null) return NotFound();
 
             await _facadeRepository.Remove(facade);
 

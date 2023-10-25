@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class NumberOfFloorsInBuildingController : Controller
     {
 
@@ -22,7 +22,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<NumberOfFloorsInBuilding> numberOfFloorsInBuildings = _numberOfFloorsInBuildingRepository.GetAll();
@@ -31,14 +30,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(NumberOfFloorsInBuildingViewModel numberOfFloorsInBuildingViewModel)
         {
             var validationResult = await _numberOfFloorsInBuildingValidator.ValidateAsync(numberOfFloorsInBuildingViewModel);
@@ -65,13 +62,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             NumberOfFloorsInBuilding numberOfFloorsInBuilding = _numberOfFloorsInBuildingRepository.GetById(id);
 
-            if (numberOfFloorsInBuilding == null)
-                return NotFound();
+            if (numberOfFloorsInBuilding == null) return NotFound();
 
             NumberOfFloorsInBuildingViewModel numberOfFloorsInBuildingViewModel = new NumberOfFloorsInBuildingViewModel
             {
@@ -86,7 +81,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(NumberOfFloorsInBuildingViewModel numberOfFloorsInBuildingViewModel)
         {
             var validationResult = await _numberOfFloorsInBuildingValidator.ValidateAsync(numberOfFloorsInBuildingViewModel);
@@ -112,13 +106,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             NumberOfFloorsInBuilding numberOfFloorsInBuilding = _numberOfFloorsInBuildingRepository.GetById(id);
 
-            if (numberOfFloorsInBuilding == null)
-                return NotFound();
+            if (numberOfFloorsInBuilding == null) return NotFound();
 
             await _numberOfFloorsInBuildingRepository.Remove(numberOfFloorsInBuilding);
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EmlakOfisiSitesi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class HousingTypeController : Controller
     {
         private readonly IRepository<HousingType> _housingTypeRepository;
@@ -22,7 +22,6 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult List()
         {
             IEnumerable<HousingType> housingTypes = _housingTypeRepository.GetAll();
@@ -31,14 +30,12 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(HousingTypeViewModel housingTypeViewModel)
         {
             var validationResult = await _housingTypeValidator.ValidateAsync(housingTypeViewModel);
@@ -63,13 +60,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id)
         {
             HousingType housingType = _housingTypeRepository.GetById(id);
 
-            if (housingType == null)
-                return NotFound();
+            if (housingType == null) return NotFound();
 
             HousingTypeViewModel housingTypeViewModel = new HousingTypeViewModel
             {
@@ -82,7 +77,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Update(HousingTypeViewModel housingTypeViewModel)
         {
             var validationResult = await _housingTypeValidator.ValidateAsync(housingTypeViewModel);
@@ -106,13 +100,11 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             HousingType housingType = _housingTypeRepository.GetById(id);
 
-            if (housingType == null)
-                return NotFound();
+            if (housingType == null) return NotFound();
 
             await _housingTypeRepository.Remove(housingType);
 
