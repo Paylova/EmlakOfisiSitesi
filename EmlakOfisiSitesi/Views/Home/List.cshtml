@@ -9,20 +9,20 @@
 <head>
     <title>İlanlar</title>
     <link rel="stylesheet" href="~/css/HomePage.css" />
-    <link rel="stylesheet" href="~/css/Card.css" />
+    <link rel="stylesheet" href="~/css/Card.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container">
         <div class="row" style="min-width:300px">
-            <div class="col-md-8">
+            <div class="col-md-11">
                 <form asp-action="List" asp-controller="Home" style="margin-bottom:15px;margin-top:15px">
-                    <!-- Sol üst köşede filtreleme seçenekleri -->
                     <h3>Filtreleme</h3>
                     <div class="form-group">
                         <label>Konum</label>
                         <select asp-for="Item2.CityId" name="CityId" asp-items="@(new SelectList(Model.Item2.Cities, "Value", "Text"))" class="form-control">
                             <option>İl Seçiniz</option>
                         </select>
+                        <br />
                         <select asp-for="Item2.DistrictId" name="DistrictId" asp-items="@(new SelectList(Model.Item2.Districts, "Value", "Text"))" class="form-control">
                             <option>İlçe Seçiniz</option>
                         </select>
@@ -44,15 +44,15 @@
                     <div class="form-group">
                         <label>Fiyat</label>
                         <div class="d-flex">
-                            <input type="number" name="MinPrice" asp-for="Item2.MinPrice" class="form-control mr-2" placeholder="En Az">
-                            <input type="number" name="MaxPrice" asp-for="Item2.MaxPrice" class="form-control" placeholder="En Çok">
+                            <input type="number" name="MinPrice" class="form-control mr-2" placeholder="En Az">
+                            <input type="number" name="MaxPrice" class="form-control" placeholder="En Çok">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Brüt Metrekare</label>
                         <div class="d-flex">
-                            <input type="number" name="MinSquareMeters" asp-for="Item2.MinSquareMeters" class="form-control mr-2" placeholder="En Az m²">
-                            <input type="number" name="MaxSquareMeters" asp-for="Item2.MaxSquareMeters" class="form-control" placeholder="En Çok m²">
+                            <input type="number" name="MinSquareMeters" class="form-control mr-2" placeholder="En Az m²">
+                            <input type="number" name="MaxSquareMeters" class="form-control" placeholder="En Çok m²">
                         </div>
                     </div>
                     <div class="form-group">
@@ -167,8 +167,7 @@
                             </div>
                             <div class="card-content">
                                 <h1 class="price-title">
-                                    @item.Price
-                                    <span>TL</span>
+                                    @string.Format("{0:N0} ₺", item.Price)
                                 </h1>
                                 <p class="head-title">@item.Title</p>
                                 <ul>
@@ -182,14 +181,14 @@
                                     }
                                     <li>@item.RoomNumber + @item.HallNumber</li>
                                     <li>@item.GrossSquareMeters m²</li>
-                                    <li>@item.FloorNumber .kat</li>
+                                    <li>@item.FloorLocation.Name</li>
                                 </ul>
                                 <p class="location">@item.City.Name / @item.District.Name</p>
                                 <div class="bottom-cont">
-                                    <p class="show-phone">@item.Agent.PhoneNumber</p>
+                                    <p>@item.Agent.PhoneNumber</p>
                                     <div class="company-name">
-                                        <p>@item.Agent.CompanyName</p>
-                                        <p>@item.Agent.Name @item.Agent.Surname </p>
+                                        <p>Şirket İsmi : @item.Agent.CompanyName</p>
+                                        <p>Ad Soyad : @item.Agent.Name @item.Agent.Surname </p>
                                     </div>
                                 </div>
                             </div>
@@ -201,8 +200,3 @@
     </div>
 </body>
 </html>
-
-@*  function openAdDetail(adId) {
-    // İlgili ilanın detay sayfasına yönlendirme işlemi
-    window.location.href = '/Ad/Detail/' + adId; // Detay sayfa URL'si burada belirtmelisiniz
-} *@

@@ -71,6 +71,7 @@ namespace EmlakOfisiSitesi
             builder.Services.AddScoped<IRepository<UsageStatus>, UsageStatusRepository>();
             builder.Services.AddScoped<IRepository<City>, CityRepository>();
             builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
+            builder.Services.AddScoped<IRepository<Admin>, AdminRepository>();
             //builder.Services.AddScoped<IRepository<Agent>, AgentRepository>();
 
             builder.Services.AddScoped<IFileManager, FileManager>();

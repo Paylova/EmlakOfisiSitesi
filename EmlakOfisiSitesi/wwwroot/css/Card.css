@@ -97,8 +97,9 @@
     font-size: 18px;
     color: #434343;
     font-weight: 600;
-    width: 200px;
+    width: 300px;
     margin: 0;
+    margin-right:50px;
     padding: 0;
     display: flex;
     flex-direction: column;

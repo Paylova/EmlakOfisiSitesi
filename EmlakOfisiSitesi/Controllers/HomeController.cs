@@ -280,15 +280,6 @@ namespace EmlakOfisiSitesi.Controllers
                 NumberOfRoomHalls = numberOfRoomHalls.Select(n => new SelectListItem { Text = n.Name, Value = n.Id.ToString() }),
                 Cities = cities.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }),
                 Districts = districts.Select(d => new SelectListItem { Text = d.Name, Value = d.Id.ToString() }),
-                //MinPrice = 0,
-                //MaxPrice = 0,
-                //MaxSquareMeters = 0,
-                //MinSquareMeters = 0,
-                //SelectedIsCreditEligibility = "",
-                //SelectedIsFurnished = "",
-                //SelectedIsOnSite = "",
-                //SelectedIsSale = "",
-                //SelectedIsSuitableForTrade = "",
             };
             return viewModel;
         }
