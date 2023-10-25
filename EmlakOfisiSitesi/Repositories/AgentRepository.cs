@@ -5,45 +5,42 @@ namespace EmlakOfisiSitesi.Repositories
 {
     public class AgentRepository : IRepository<Agent>
     {
-        private readonly DbContext _context;
+        private readonly Models.DbContext _context;
 
-        public AgentRepository(DbContext context)
+        public AgentRepository(Models.DbContext context)
         {
             _context = context;
         }
 
-        public async Task Add(Agent entity)
+        public Task Add(Agent entity)
         {
-            await _context.Set<Agent>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task AddRange(IEnumerable<Agent> entities)
+        public Task AddRange(IEnumerable<Agent> entities)
         {
-            await _context.Set<Agent>().AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Agent> GetAll()
         {
-            return _context.Set<Agent>().ToList();
+            return _context.Agents.ToList();
         }
 
         public Agent GetById(Guid id)
         {
-            return _context.Set<Agent>().Find(id);
+            return _context.Agents.Find(id.ToString());
         }
 
         public async Task Remove(Agent entity)
         {
-            _context.Set<Agent>().Remove(entity);
+            _context.Agents.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveRange(IEnumerable<Agent> entities)
+        public Task RemoveRange(IEnumerable<Agent> entities)
         {
-            _context.Set<Agent>().RemoveRange(entities);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
         public async Task Update(Agent entity)

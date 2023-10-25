@@ -35,14 +35,12 @@
                     </li>
                     @if (User.IsInRole("Admin"))
                     {
-
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="BuildingAge" asp-action="List">Admin Paneli</a>
                         </li>
                     }
                     @if (User.IsInRole("Agent"))
                     {
-
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="HousingAdvertisement" asp-action="List">Emlakçı Paneli</a>
                         </li>

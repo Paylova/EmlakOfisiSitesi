@@ -57,6 +57,7 @@ namespace EmlakOfisiSitesi.Controllers
 
             return View(result);
         }
+
         [HttpPost]
         public IActionResult List(EmlakFiltreViewModel filterDatas)
         {
@@ -64,6 +65,17 @@ namespace EmlakOfisiSitesi.Controllers
             var viewModel = GetAllFilterList();
             var result = new Tuple<IEnumerable<HousingAdvertisement>, EmlakFiltreViewModel>(housingAdvertisements, viewModel);
             return View(result);
+        }
+
+        [HttpGet()]
+        public IActionResult Detail(Guid id)
+        {
+            if (id != Guid.Empty)
+            {
+                HousingAdvertisement housingAdvertisement = _housingAdvertisementRepository.GetById(id);
+                return View(housingAdvertisement);
+            }
+            return View();
         }
 
         public IEnumerable<HousingAdvertisement> UseFilter(EmlakFiltreViewModel filterDatas)

@@ -1,5 +1,6 @@
 ﻿using EmlakOfisiSitesi.Models;
 using EmlakOfisiSitesi.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmlakOfisiSitesi.Repositories
 {
@@ -7,7 +8,7 @@ namespace EmlakOfisiSitesi.Repositories
     {
         private readonly Models.DbContext _context;
 
-        public AdminRepository(DbContext context)
+        public AdminRepository(Models.DbContext context)
         {
             _context = context;
         }
@@ -29,12 +30,13 @@ namespace EmlakOfisiSitesi.Repositories
 
         public Admin GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Admins.Find(id.ToString());
         }
 
-        public Task Remove(Admin entity)
+        public async Task Remove(Admin entity)
         {
-            throw new NotImplementedException();
+            _context.Admins.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public Task RemoveRange(IEnumerable<Admin> entities)
@@ -42,9 +44,10 @@ namespace EmlakOfisiSitesi.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Update(Admin entity)
+        public async Task Update(Admin entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

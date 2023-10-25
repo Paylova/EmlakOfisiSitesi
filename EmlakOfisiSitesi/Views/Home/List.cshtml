@@ -9,7 +9,7 @@
 <head>
     <title>İlanlar</title>
     <link rel="stylesheet" href="~/css/HomePage.css" />
-    <link rel="stylesheet" href="~/css/Card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Card.css" />
 </head>
 <body>
     <div class="container">
@@ -160,7 +160,7 @@
                             <div class="img-cont">
                                 @{
                                     var mainImage = item.HousingAdvertisementPhotos.FirstOrDefault(img => img.Id == item.MainImageId);
-                                    <a asp-action="Detail" asp-controller="HousingAdvertisement" asp-route-id="@item.Id">
+                                    <a asp-action="Detail" asp-controller="Home" asp-route-id="@item.Id">
                                         <img src="@Url.Content("~/images/HousingAdvertisements/" + mainImage.FilePath)" alt="@item.Title" />
                                     </a>
                                 }

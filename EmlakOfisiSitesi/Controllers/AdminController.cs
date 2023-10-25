@@ -23,42 +23,40 @@ namespace EmlakOfisiSitesi.Controllers
             _adminRepository = adminRepository;
         }
 
-        public async Task<IActionResult> AdminList()
+        [HttpGet]
+        public IActionResult AdminList()
         {
             IEnumerable<Admin> admins = _adminRepository.GetAll();
             return View(admins);
-
-
-
         }
+
+        [HttpPost]
         public IActionResult AddAdmin()
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> AddAdmin(AdminRegisterViewModel model)
+        public async Task<IActionResult> AddAdmin(AdminRegisterViewModel adminRegisterViewModel)
         {
-            var validationResult = await _adminRegisterValidator.ValidateAsync(model);
+            var validationResult = await _adminRegisterValidator.ValidateAsync(adminRegisterViewModel);
 
             if (validationResult.IsValid)
             {
-                var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                IdentityUser user = new() { UserName = adminRegisterViewModel.UserName, Email = adminRegisterViewModel.Email };
+                IdentityResult result = await _userManager.CreateAsync(user, adminRegisterViewModel.Password);
 
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
-
                     return RedirectToAction("AdminList");
                 }
 
                 foreach (var error in result.Errors)
-                {
                     ModelState.AddModelError("", error.Description);
-                }
             }
 
-            return View("AddAdmin", model);
+            return View("AddAdmin", adminRegisterViewModel);
         }
     }
 }

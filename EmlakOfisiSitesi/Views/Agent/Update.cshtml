@@ -1,0 +1,41 @@
+﻿@model AgentViewModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayot.cshtml";
+}
+
+<form asp-action="Update" asp-controller="Agent" style="margin-bottom:15px;margin-top:15px">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Name" style="color:red"></span>
+        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="Surname" class="form-control" placeholder="Surname">
+            <span asp-validation-for="Surname" style="color:red"></span>
+        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="UserName" class="form-control" placeholder="UserName">
+            <span asp-validation-for="UserName" style="color:red"></span>
+        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="Email" class="form-control" placeholder="Emailiniz">
+            <span asp-validation-for="Email" style="color:red"></span>
+        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <input type="text" asp-for="CompanyName" class="form-control" placeholder="Company Name">
+            <span asp-validation-for="CompanyName" style="color:red"></span>
+        </div>
+        @* <div class="col-md-12" style="margin-bottom:15px">
+        <input type="text" asp-for="Password" class="form-control" placeholder="Password">
+        <span asp-validation-for="Password" style="color:red"></span>
+        </div> *@
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary" style="width:100%">Güncelle</button>
+        </div>
+    </div>
+</form>
+
+
+
+

@@ -76,8 +76,8 @@ namespace EmlakOfisiSitesi.Controllers
             {
                 Id = buildingAge.Id,
                 Name = buildingAge.Name,
-                Min = Convert.ToInt32(buildingAge.Min),
-                Max = Convert.ToInt32(buildingAge.Max),
+                Min = buildingAge.Min,
+                Max = buildingAge.Max,
                 IsAndOver = buildingAge.IsAndOver,
                 IsActive = buildingAge.IsActive
             };

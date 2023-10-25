@@ -75,8 +75,6 @@ namespace EmlakOfisiSitesi.Controllers
                     {
                         return View();
                     }
-
-
                 }
             }
             return View();

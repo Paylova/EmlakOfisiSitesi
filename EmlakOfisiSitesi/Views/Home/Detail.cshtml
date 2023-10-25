@@ -1,0 +1,44 @@
+﻿@model HousingAdvertisement
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>İlan Detayı</h2>
+@if (Model != null)
+{
+    <div>
+        <h3>@Model.Title</h3>
+        Son Güncelleme Tarihi
+        <p>Açıklama: @Model.Description</p>
+        <p>Fiyat: @string.Format("{0:N0} ₺", Model.Price)</p>
+        <p>Oda Sayısı: @Model.RoomNumber</p>
+        <p>Salon Sayısı: @Model.HallNumber</p>
+        <p>Banyo Sayısı: @Model.BathroomNumber</p>
+        <p>Brüt Metrekare: @Model.GrossSquareMeters m²</p>
+        <p>Net Metrekare: @Model.NetSquareMeters m²</p>
+        <p>Isıtma Türü: @Model.HeatingType.Name</p>
+        <p>Bina Yaşı: @Model.BuildingAge</p>
+        <p>Kat Konumu: @Model.FloorLocation.Name</p>
+        <p>Kat Numarası: @Model.FloorNumber</p>
+        <p>Krediye Uygun: @(Model.IsCreditEligibility ? "Evet" : "Hayır")</p>
+        <p>Eşyalı: @(Model.IsFurnished ? "Evet" : "Hayır")</p>
+        <p>Kullanım Durumu: @Model.UsageStatus</p>
+        <p>Cephe: @Model.Facade</p>
+        <p>Aidat: @Model.Dues</p>
+        <p>Tapu Durumu: @Model.DeedStatus</p>
+        <p>Ticaret için Uygun: @(Model.IsSuitableForTrade ? "Evet" : "Hayır")</p>
+        <p>Sitede mi: @(Model.IsOnSite ? "Evet" : "Hayır")</p>
+        <p>Kira Geliri: @string.Format("{0:N0} ₺", Model.RentalIncome)</p>
+        <p>Depozito: @string.Format("{0:N0} ₺", Model.Deposit)</p>
+        <p>Şehir: @Model.City.Name</p>
+        <p>İlçe: @Model.District.Name</p>
+        <p>Adres: @Model.Address</p>
+        <p> İlan Türü:@(Model.IsForSale ? "Satılık" : "Kiralık")</p>
+        <p>İlan Sahibi: @Model.Agent.Name @Model.Agent.Surname</p>
+        <p>Telefon: @Model.Agent.PhoneNumber</p>
+        @* <p>İlan Resmi: <img src="~/images/HousingAdvertisements/@Model.MainImageId" alt="@Model.Title" /></p> *@
+    </div>
+}
+
+@* <a asp-action="List" asp-controller="Home">Geri Dön</a> *@

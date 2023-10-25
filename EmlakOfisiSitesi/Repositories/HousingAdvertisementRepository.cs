@@ -37,7 +37,7 @@ namespace EmlakOfisiSitesi.Repositories
                 .Include(ha => ha.UsageStatus)
                 .Include(ha => ha.HousingAdvertisementPhotos)
                 .Include(ha => ha.District);
-                
+
 
         }
 
