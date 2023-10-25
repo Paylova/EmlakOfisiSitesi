@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HousingAdvertisement>
+﻿@model Tuple<IEnumerable<HousingAdvertisement>, EmlakOfisiSitesi.ViewModels.EmlakFiltreViewModel>
 @{
     ViewData["Title"] = "İlanlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,183 +15,146 @@
     <div class="container">
         <div class="row" style="min-width:300px">
             <div class="col-md-8">
-                <!-- Sol üst köşede filtreleme seçenekleri -->
-                <h3>Filtreleme</h3>
-@*                 <div class="form-group">
-                    <label for="housingType">Konut Türü:</label>
-                    <select id="housingType" name="housingType" class="form-control">
-                        <option value="">Tüm Konut Türleri</option>
-                        @foreach (var housingType in Model.HousingTypes)
-                        {
-                            <option value="@housingType.Id">@housingType.Name</option>
-                        }
-                    </select>
-                </div> *@
-                <div class="form-group">
-                    <label for="city">İl:</label>
-                    <select id="city" name="city" class="form-control">
-                        <option value="">Seçiniz</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="district">İlçe:</label>
-                    <select id="district" name="district" class="form-control">
-                        <option value="">Seçiniz</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="minPrice">Min Fiyat:</label>
-                    <input type="number" id="minPrice" name="minPrice" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="maxPrice">Max Fiyat:</label>
-                    <input type="number" id="maxPrice" name="maxPrice" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="minSquareMeter">En Az Metrekare:</label>
-                    <input type="number" id="minSquareMeter" name="minSquareMeter" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="maxSquareMeter">En Çok Metrekare:</label>
-                    <input type="number" id="maxSquareMeter" name="maxSquareMeter" class="form-control">
-                </div>
-@*                 <div class="form-group">
-                    <label for="numberOfRoomHall">Oda ve Salon Sayısı:</label>
-                    <select id="numberOfRoomHall" name="numberOfRoomHall" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.NumberOfRoomHalls)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="numberOfBathroom">Banyo Sayısı:</label>
-                    <select id="numberOfBathroom" name="numberOfBathroom" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.NumberOfBathrooms)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="buildingAge">Bina Yaşı:</label>
-                    <select id="buildingAge" name="buildingAge" class="form-control">
-                        <option value="">Tüm Yaşlar</option>
-                        @foreach (var age in Model.BuildingAges)
-                        {
-                            <option value="@age.Id">@age.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="floorLocation">Kat Konumu:</label>
-                    <select id="floorLocation" name="floorLocation" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.FloorLocations)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="numberOfFloorsInBuilding">Bina Kat Sayısı:</label>
-                    <select id="numberOfFloorsInBuilding" name="numberOfFloorsInBuilding" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.NumberOfFloorsInBuildings)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="creditEligibility">Kredi Uygunluğu:</label>
-                    <select id="creditEligibility" name="creditEligibility" class="form-control">
-                        <option value="">Tümü</option>
-                        <option value="true">Evet</option>
-                        <option value="false">Hayır</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="deedStatus">Tapu Durumu:</label>
-                    <select id="deedStatus" name="deedStatus" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.DeedStatuses)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="usageStatus">Kullanım Durumu:</label>
-                    <select id="usageStatus" name="usageStatus" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.UsageStatuses)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="heatingType">Isınma Tipi:</label>
-                    <select id="heatingType" name="heatingType" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.HeatingTypes)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="isFurnished">Eşyalı Durumu:</label>
-                    <select id="isFurnished" name="isFurnished" class="form-control">
-                        <option value="true">Eşyalı</option>
-                        <option value="false">Eşyasız</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="isOnSite">Site İçinde</label>
-                    <select id="isOnSite" name="isOnSite" class="form-control">
-                        <option value="true">Evet</option>
-                        <option value="false">Hayır</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="facade">Cephe Türü:</label>
-                    <select id="facade" name="facade" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.Fades)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="suitableForTrade">Takas İçin Uygun Mu?</label>
-                    <select id="suitableForTrade" name="suitableForTrade" class="form-control">
-                        <option value="true">Evet</option>
-                        <option value="false">Hayır</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="dateOfAdvertisement">İlan Tarihi:</label>
-                    <select id="dateOfAdvertisement" name="dateOfAdvertisement" class="form-control">
-                        <option value="">Seçiniz</option>
-                        @foreach (var item in Model.DateOfAdvertisements)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                </div> *@
+                <form asp-action="List" asp-controller="Home" style="margin-bottom:15px;margin-top:15px">
+                    <!-- Sol üst köşede filtreleme seçenekleri -->
+                    <h3>Filtreleme</h3>
+                    <div class="form-group">
+                        <label>Konum</label>
+                        <select asp-for="Item2.CityId" name="CityId" asp-items="@(new SelectList(Model.Item2.Cities, "Value", "Text"))" class="form-control">
+                            <option>İl Seçiniz</option>
+                        </select>
+                        <select asp-for="Item2.DistrictId" name="DistrictId" asp-items="@(new SelectList(Model.Item2.Districts, "Value", "Text"))" class="form-control">
+                            <option>İlçe Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>İlan Tipi</label>
+                        <select name="SelectedIsSale" asp-for="Item2.SelectedIsSale" class="form-control">
+                            <option value="all">Tümü</option>
+                            <option value="true">Satılık</option>
+                            <option value="false">Kiralık</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Konut Tipi</label>
+                        <select name="HousingTypeId" asp-for="Item2.HousingTypeId" asp-items="@(new SelectList(Model.Item2.HousingTypes, "Value", "Text"))" class="form-control">
+                            <option>Konut Tipi Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fiyat</label>
+                        <div class="d-flex">
+                            <input type="number" name="MinPrice" asp-for="Item2.MinPrice" class="form-control mr-2" placeholder="En Az">
+                            <input type="number" name="MaxPrice" asp-for="Item2.MaxPrice" class="form-control" placeholder="En Çok">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Brüt Metrekare</label>
+                        <div class="d-flex">
+                            <input type="number" name="MinSquareMeters" asp-for="Item2.MinSquareMeters" class="form-control mr-2" placeholder="En Az m²">
+                            <input type="number" name="MaxSquareMeters" asp-for="Item2.MaxSquareMeters" class="form-control" placeholder="En Çok m²">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Oda Salon Sayısı</label>
+                        <select name="NumberOfRoomHallId" asp-for="Item2.NumberOfRoomHallId" asp-items="@(new SelectList(Model.Item2.NumberOfRoomHalls, "Value", "Text"))" class="form-control">
+                            <option>Oda Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Banyo Sayısı</label>
+                        <select name="NumberOfBathroomId" asp-for="Item2.NumberOfBathroomId" asp-items="@(new SelectList(Model.Item2.NumberOfBathrooms, "Value", "Text"))" class="form-control">
+                            <option>Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Bina Yaşı</label>
+                        <select name="BuildingAgeId" asp-for="Item2.BuildingAgeId" asp-items="@(new SelectList(Model.Item2.BuildingAges, "Value", "Text"))" class="form-control">
+                            <option>Bina Yaşı</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Bulunduğu Kat</label>
+                        <select name="FloorLocationId" asp-for="Item2.FloorLocationId" asp-items="@(new SelectList(Model.Item2.FloorLocations, "Value", "Text"))" class="form-control">
+                            <option>Kat Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Binadaki Kat Sayısı</label>
+                        <select name="NumberOfFloorsInBuildingId" asp-for="Item2.NumberOfFloorsInBuildingId" asp-items="@(new SelectList(Model.Item2.NumberOfFloorsInBuildings, "Value", "Text"))" class="form-control">
+                            <option>Kat Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Krediye Uygunluk</label>
+                        <select name="SelectedIsCreditEligibility" asp-for="Item2.SelectedIsCreditEligibility" class="form-control">
+                            <option value="all">Tümü</option>
+                            <option value="true">Evet</option>
+                            <option value="false">Hayır</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tapu Durumu</label>
+                        <select name="DeedStatusId" asp-for="Item2.DeedStatusId" asp-items="@(new SelectList(Model.Item2.DeedStatuses, "Value", "Text"))" class="form-control">
+                            <option>Tapu Durumu Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kullanım Durumu</label>
+                        <select name="UsageStatusId" asp-for="Item2.UsageStatusId" asp-items="@(new SelectList(Model.Item2.UsageStatuses, "Value", "Text"))" class="form-control">
+                            <option>Kullanım Durumu Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Isınma Tipi</label>
+                        <select name="HeatingTypeId" asp-for="Item2.HeatingTypeId" asp-items="@(new SelectList(Model.Item2.HeatingTypes, "Value", "Text"))" class="form-control">
+                            <option>Isınma Tipi Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Eşya Durumu</label>
+                        <select name="SelectedIsFurnished" asp-for="Item2.SelectedIsFurnished" class="form-control">
+                            <option value="all">Tümü</option>
+                            <option value="true">Eşyalı</option>
+                            <option value="false">Eşyasız</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Site İçinde</label>
+                        <select name="SelectedIsOnSite" asp-for="Item2.SelectedIsOnSite" class="form-control">
+                            <option value="all">Tümü</option>
+                            <option value="true">Evet</option>
+                            <option value="false">Hayır</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cephe</label>
+                        <select name="FacadeId" asp-for="Item2.FacadeId" asp-items="@(new SelectList(Model.Item2.Facades, "Value", "Text"))" class="form-control">
+                            <option>Cephe Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Takasa Uygun</label>
+                        <select name="SelectedIsSuitableForTrade" asp-for="Item2.SelectedIsSuitableForTrade" class="form-control">
+                            <option value="all">Tümü</option>
+                            <option value="true">Evet</option>
+                            <option value="false">Hayır</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfAdvertisement">İlan Tarihi</label>
+                        <select name="DateOfAdvertisementId" asp-for="Item2.DateOfAdvertisementId" asp-items="@(new SelectList(Model.Item2.DateOfAdvertisements, "Value", "Text"))" class="form-control">
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width:100%">Filtrele</button>
+                </form>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h3 style="width:100%; text-align:center">İlanlar</h3>
                 <div class="ad-list" style="width:calc(100vw - 450px)">
-
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Item1)
                     {
                         <div class="card-container">
                             <div class="img-cont">
@@ -201,7 +164,6 @@
                                         <img src="@Url.Content("~/images/HousingAdvertisements/" + mainImage.FilePath)" alt="@item.Title" />
                                     </a>
                                 }
-
                             </div>
                             <div class="card-content">
                                 <h1 class="price-title">
@@ -236,47 +198,6 @@
                 </div>
             </div>
         </div>
-
-
-
-        @*  <div class="ad-list">
-        @foreach (var item in Model.HousingAdvertisements)
-        {
-        <div class="ad-item" onclick="openAdDetail('@item.Id')">
-        <div class="card" style="width: 60rem; height:14rem;">
-        <div class="row">
-        <div class="col-md-4">
-        <img src="" alt="İlan Görseli" class="img-fluid">
-        </div>
-        <div class="col-md-8">
-        <div class="card-body">
-        <h5 class="card-title">
-        @if (item.IsForSale)
-        {
-        <span class="text-success">Satılık</span>
-        }
-        else
-        {
-        <span class="text-info">Kiralık</span>
-        }
-        </h5>
-        <p class="card-text">@item.Title</p>
-        <p>Oda ve Salon: @item.RoomNumber + @item.HallNumber</p>
-        <p>Brüt Metrekare: @item.GrossSquareMeters m²</p>
-        <p>Bina Yaşı: @item.Agent</p>
-        <p>Kat Konumu: @item.FloorLocation.Name</p>
-
-        <p>Fiyat: @item.Price TL</p>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        }
-        </div> *@
-
-
-
     </div>
 </body>
 </html>

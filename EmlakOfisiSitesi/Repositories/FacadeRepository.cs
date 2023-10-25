@@ -31,7 +31,7 @@ namespace EmlakOfisiSitesi.Repositories
 
         public Facade GetById(Guid id)
         {
-            return _context.Facades.Find(id);
+            return  _context.Facades.FirstOrDefault(f => f.Id == id);
         }
 
         public async Task Remove(Facade entity)
