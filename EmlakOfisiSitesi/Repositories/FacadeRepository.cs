@@ -24,14 +24,16 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Facade> GetAll()
+        public IEnumerable<Facade> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.Facades.Where(ba => ba.IsActive == IsActive);
             return _context.Facades;
         }
 
         public Facade GetById(Guid id)
         {
-            return  _context.Facades.FirstOrDefault(f => f.Id == id);
+            return _context.Facades.FirstOrDefault(f => f.Id == id);
         }
 
         public async Task Remove(Facade entity)

@@ -24,8 +24,10 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<HousingAdvertisementPhoto> GetAll()
+        public IEnumerable<HousingAdvertisementPhoto> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.HousingAdvertisementPhotos.Where(ba => ba.IsActive == true);
             return _context.HousingAdvertisementPhotos;
         }
 

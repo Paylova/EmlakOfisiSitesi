@@ -24,8 +24,10 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<DateOfAdvertisement> GetAll()
+        public IEnumerable<DateOfAdvertisement> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.DateOfAdvertisements.Where(ba => ba.IsActive == IsActive);
             return _context.DateOfAdvertisements;
         }
 

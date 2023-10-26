@@ -23,18 +23,18 @@ namespace EmlakOfisiSitesi.ViewModels
         public IEnumerable<SelectListItem> FloorLocations { get; set; } = new List<SelectListItem>();
         public int FloorNumber { get; set; }
         public bool IsCreditEligibility { get; set; }
-        public bool IsFurnished { get; set; }
-        public Guid UsageStatusId { get; set; }
+        public bool? IsFurnished { get; set; }
+        public Guid? UsageStatusId { get; set; }
         public IEnumerable<SelectListItem> UsageStatues { get; set; } = new List<SelectListItem>();
-        public Guid FacadeId { get; set; }
+        public Guid? FacadeId { get; set; }
         public IEnumerable<SelectListItem> Facades { get; set; } = new List<SelectListItem>();
-        public decimal Dues { get; set; }
-        public Guid DeedStatusId { get; set; }
+        public decimal? Dues { get; set; }
+        public Guid? DeedStatusId { get; set; }
         public IEnumerable<SelectListItem> DeedStatues { get; set; } = new List<SelectListItem>();
-        public bool IsSuitableForTrade { get; set; }
-        public bool IsOnSite { get; set; }
-        public decimal RentalIncome { get; set; }
-        public decimal Deposit { get; set; }
+        public bool? IsSuitableForTrade { get; set; }
+        public bool? IsOnSite { get; set; }
+        public decimal? RentalIncome { get; set; }
+        public decimal? Deposit { get; set; }
         public Guid CityId { get; set; }
         public IEnumerable<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
         public Guid DistrictId { get; set; }

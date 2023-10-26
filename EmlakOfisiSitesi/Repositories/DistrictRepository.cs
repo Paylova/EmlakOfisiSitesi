@@ -24,9 +24,11 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<District> GetAll()
+        public IEnumerable<District> GetAll(bool? IsActive = null)
         {
-            return _context.Districts.Include(district => district.City);
+            if (IsActive.HasValue)
+                return _context.Districts.Where(ba => ba.IsActive == IsActive).Include(c => c.City);
+            return _context.Districts.Include(c => c.City);
         }
 
         public District GetById(Guid id)

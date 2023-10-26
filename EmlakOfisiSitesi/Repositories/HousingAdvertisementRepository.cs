@@ -23,22 +23,33 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.HousingAdvertisements.AddRangeAsync(entities);
             await _context.SaveChangesAsync();
         }
-
-        public IEnumerable<HousingAdvertisement> GetAll()
+        public IEnumerable<HousingAdvertisement> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.HousingAdvertisements.Where(x => x.IsActive == IsActive)
+           .Include(ha => ha.Agent)
+           .Include(ha => ha.City)
+           .Include(ha => ha.DeedStatus)
+           .Include(ha => ha.Facade)
+           .Include(ha => ha.FloorLocation)
+           .Include(ha => ha.HeatingType)
+           .Include(ha => ha.HousingType)
+           .Include(ha => ha.UsageStatus)
+           .Include(ha => ha.HousingAdvertisementPhotos)
+           .Include(ha => ha.District)
+           .Include(ha => ha.DeedStatus);
             return _context.HousingAdvertisements
-                .Include(ha => ha.Agent)
-                .Include(ha => ha.City)
-                .Include(ha => ha.DeedStatus)
-                .Include(ha => ha.Facade)
-                .Include(ha => ha.FloorLocation)
-                .Include(ha => ha.HeatingType)
-                .Include(ha => ha.HousingType)
-                .Include(ha => ha.UsageStatus)
-                .Include(ha => ha.HousingAdvertisementPhotos)
-                .Include(ha => ha.District);
-
-
+           .Include(ha => ha.Agent)
+           .Include(ha => ha.City)
+           .Include(ha => ha.DeedStatus)
+           .Include(ha => ha.Facade)
+           .Include(ha => ha.FloorLocation)
+           .Include(ha => ha.HeatingType)
+           .Include(ha => ha.HousingType)
+           .Include(ha => ha.UsageStatus)
+           .Include(ha => ha.HousingAdvertisementPhotos)
+           .Include(ha => ha.DeedStatus)
+           .Include(ha => ha.District);
         }
 
         public HousingAdvertisement GetById(Guid id)

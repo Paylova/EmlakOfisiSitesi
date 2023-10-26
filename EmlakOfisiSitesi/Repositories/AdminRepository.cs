@@ -23,7 +23,7 @@ namespace EmlakOfisiSitesi.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Admin> GetAll()
+        public IEnumerable<Admin> GetAll(bool? IsActive = null)
         {
             return _context.Admins.ToList();
         }

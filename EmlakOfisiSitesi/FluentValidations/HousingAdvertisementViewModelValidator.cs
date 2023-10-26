@@ -32,57 +32,69 @@ namespace EmlakOfisiSitesi.FluentValidations
             RuleFor(model => model.NetSquareMeters)
                 .GreaterThan(0).WithMessage("Geçerli bir net metrekare giriniz.");
 
-            RuleFor(model => model.Dues)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir aidat miktarı giriniz.");
-
-            RuleFor(model => model.RentalIncome)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir kira geliri giriniz.");
-
-            RuleFor(model => model.Deposit)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir depozito miktarı giriniz.");
-
-            RuleFor(model => model.Address)
-                .NotEmpty().WithMessage("Adres boş bırakılamaz.")
-                .MaximumLength(100).WithMessage("Adres en fazla 100 karakter olmalıdır.");
-            RuleFor(model => model.HousingTypeId)
-           .NotEmpty().WithMessage("Konut tipi seçmelisiniz.");
-
             RuleFor(model => model.HeatingTypeId)
-                .NotEmpty().WithMessage("Isıtma tipi seçmelisiniz.");
+             .NotEmpty().WithMessage("Isıtma tipi seçmelisiniz.");
 
             RuleFor(model => model.BuildingAge)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir bina yaşı giriniz.");
+               .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir bina yaşı giriniz.");
 
             RuleFor(model => model.FloorLocationId)
-                .NotEmpty().WithMessage("Kat konumu seçmelisiniz.");
+               .NotEmpty().WithMessage("Kat konumu seçmelisiniz.");
 
             RuleFor(model => model.FloorNumber)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir kat numarası giriniz.");
+               .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir kat numarası giriniz.");
 
-            RuleFor(model => model.UsageStatusId)
-                .NotEmpty().WithMessage("Kullanım durumu seçmelisiniz.");
-
-            RuleFor(model => model.FacadeId)
-                .NotEmpty().WithMessage("Cephe tipi seçmelisiniz.");
+            RuleFor(model => model.CityId)
+                .NotEmpty().WithMessage("İl seçmelisiniz.");
 
             RuleFor(model => model.DistrictId)
                 .NotEmpty().WithMessage("İlçe seçmelisiniz.");
 
-            RuleFor(model => model.IsSuitableForTrade)
-                .NotNull().WithMessage("Ticaret için uygunluk durumunu seçmelisiniz.");
+            RuleFor(model => model.Address)
+              .NotEmpty().WithMessage("Adres boş bırakılamaz.")
+              .MaximumLength(100).WithMessage("Adres en fazla 100 karakter olmalıdır.");
 
-            RuleFor(model => model.IsOnSite)
-                .NotNull().WithMessage("Site içinde bulunma durumunu seçmelisiniz.");
-
-            RuleFor(model => model.IsForSale)
-                .NotNull().WithMessage("Satılık durumunu seçmelisiniz.");
-
-            RuleFor(model => model.IsForRent)
-                .NotNull().WithMessage("Kiralık durumunu seçmelisiniz.");
+            RuleFor(model => model.HousingTypeId)
+           .NotEmpty().WithMessage("Konut tipi seçmelisiniz.");
 
             RuleFor(c => c.HousingAdvertisementPhotos)
-            .NotEmpty().WithMessage("En az bir fotoğraf yükleyin.")
-            .Must(BeValidImages).WithMessage("Geçerli fotoğraf dosyaları yükleyin (jpg, jpeg, png, webp).");
+          .NotEmpty().WithMessage("En az bir fotoğraf yükleyin.")
+          .Must(BeValidImages).WithMessage("Geçerli fotoğraf dosyaları yükleyin (jpg, jpeg, png, webp).");
+
+         //   RuleFor(model => model.IsCreditEligibility)
+         //.NotEmpty().WithMessage("Krediye uygunluk seçmelisiniz.");
+
+            //RuleFor(model => model.Dues)
+            //    .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir aidat miktarı giriniz.");
+
+            //RuleFor(model => model.RentalIncome)
+            //    .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir kira geliri giriniz.");
+
+            //RuleFor(model => model.Deposit)
+            //    .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir depozito miktarı giriniz.");
+
+            //RuleFor(model => model.UsageStatusId)
+            //    .NotEmpty().WithMessage("Kullanım durumu seçmelisiniz.");
+
+            //RuleFor(model => model.FacadeId)
+            //    .NotEmpty().WithMessage("Cephe tipi seçmelisiniz.");
+
+            //RuleFor(model => model.DistrictId)
+            //    .NotEmpty().WithMessage("İlçe seçmelisiniz.");
+
+            //RuleFor(model => model.IsSuitableForTrade)
+            //    .NotNull().WithMessage("Takas için uygunluk durumunu seçmelisiniz.");
+
+            //RuleFor(model => model.IsOnSite)
+            //    .NotNull().WithMessage("Site içinde bulunma durumunu seçmelisiniz.");
+
+            //RuleFor(model => model.IsForSale)
+            //    .NotNull().WithMessage("Satılık durumunu seçmelisiniz.");
+
+            //RuleFor(model => model.IsForRent)
+            //    .NotNull().WithMessage("Kiralık durumunu seçmelisiniz.");
+
+
         }
         private bool BeValidImages(List<IFormFile> files)
         {

@@ -85,14 +85,14 @@ namespace EmlakOfisiSitesi.Controllers
         [Authorize(Roles = "Agent")]
         public IActionResult CreateSale()
         {
-            var housingTypes = _housingTypeRepository.GetAll();
-            var heatingTypes = _heatingTypeRepository.GetAll();
-            var floorLocations = _floorLocationRepository.GetAll();
-            var usageStatues = _usageStatusRepository.GetAll();
-            var facadeTypes = _facadeRepository.GetAll();
-            var deedStatues = _deedStatusRepository.GetAll();
-            var districts = _districtRepository.GetAll();
-            var cities = _cityRepository.GetAll();
+            var housingTypes = _housingTypeRepository.GetAll(true);
+            var heatingTypes = _heatingTypeRepository.GetAll(true);
+            var floorLocations = _floorLocationRepository.GetAll(true);
+            var usageStatues = _usageStatusRepository.GetAll(true);
+            var facadeTypes = _facadeRepository.GetAll(true);
+            var deedStatues = _deedStatusRepository.GetAll(true);
+            var districts = _districtRepository.GetAll(true);
+            var cities = _cityRepository.GetAll(true);
 
             var housingAdvertisementViewModel = new HousingAdvertisementViewModel
             {
@@ -142,7 +142,7 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "Agent")]
+        [Authorize(Roles = "Agent")]
         public async Task<IActionResult> CreateSale(HousingAdvertisementViewModel housingAdvertisementViewModel)
         {
             var validationResult = await _housingAdvertisementValidator.ValidateAsync(housingAdvertisementViewModel);
@@ -153,7 +153,7 @@ namespace EmlakOfisiSitesi.Controllers
                     ModelState.AddModelError("", error.ErrorMessage);
 
                 GetAllTypes(housingAdvertisementViewModel);
-                var deedStatues = _deedStatusRepository.GetAll();
+                var deedStatues = _deedStatusRepository.GetAll(true);
                 housingAdvertisementViewModel.DeedStatues = deedStatues.Select(c => new SelectListItem
                 {
                     Text = c.Name,
@@ -165,9 +165,6 @@ namespace EmlakOfisiSitesi.Controllers
             HousingType housingType = _housingTypeRepository.GetById(housingAdvertisementViewModel.HousingTypeId);
             HeatingType heatingType = _heatingTypeRepository.GetById(housingAdvertisementViewModel.HeatingTypeId);
             FloorLocation floorLocation = _floorLocationRepository.GetById(housingAdvertisementViewModel.FloorLocationId);
-            UsageStatus usageStatus = _usageStatusRepository.GetById(housingAdvertisementViewModel.UsageStatusId);
-            Facade facade = _facadeRepository.GetById(housingAdvertisementViewModel.FacadeId);
-            DeedStatus deedStatus = _deedStatusRepository.GetById(housingAdvertisementViewModel.DeedStatusId);
             City city = _cityRepository.GetById(housingAdvertisementViewModel.CityId);
             District district = _districtRepository.GetById(housingAdvertisementViewModel.DistrictId);
             var userId = Request.Cookies["userId"];
@@ -194,10 +191,7 @@ namespace EmlakOfisiSitesi.Controllers
                         FloorNumber = housingAdvertisementViewModel.FloorNumber,
                         IsCreditEligibility = housingAdvertisementViewModel.IsCreditEligibility,
                         IsFurnished = housingAdvertisementViewModel.IsFurnished,
-                        UsageStatus = usageStatus,
-                        Facade = facade,
                         Dues = housingAdvertisementViewModel.Dues,
-                        DeedStatus = deedStatus,
                         IsSuitableForTrade = housingAdvertisementViewModel.IsSuitableForTrade,
                         IsOnSite = housingAdvertisementViewModel.IsOnSite,
                         RentalIncome = housingAdvertisementViewModel.RentalIncome,
@@ -209,6 +203,21 @@ namespace EmlakOfisiSitesi.Controllers
                         Agent = agentUser,
                         IsActive = true
                     };
+                    if (housingAdvertisementViewModel.UsageStatusId != null)
+                    {
+                        UsageStatus usageStatus = _usageStatusRepository.GetById((Guid)housingAdvertisementViewModel.UsageStatusId);
+                        housingAdvertisement.UsageStatus = usageStatus;
+                    }
+                    if (housingAdvertisementViewModel.FacadeId != null)
+                    {
+                        Facade facade = _facadeRepository.GetById((Guid)housingAdvertisementViewModel.FacadeId);
+                        housingAdvertisement.Facade = facade;
+                    }
+                    if (housingAdvertisementViewModel.DeedStatusId != null)
+                    {
+                        DeedStatus deedStatus = _deedStatusRepository.GetById((Guid)housingAdvertisementViewModel.DeedStatusId);
+                        housingAdvertisement.DeedStatus = deedStatus;
+                    }
                     string uploadDirectory = "wwwroot/images/HousingAdvertisements";
                     List<HousingAdvertisementPhoto> housingAdvertisementPhotos = new List<HousingAdvertisementPhoto>();
                     bool isFirstImage = true;
@@ -237,7 +246,7 @@ namespace EmlakOfisiSitesi.Controllers
                     }
                     housingAdvertisement.HousingAdvertisementPhotos = housingAdvertisementPhotos;
                     await _housingAdvertisementRepository.Add(housingAdvertisement);
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("List", "HousingAdvertisement");
                 }
             }
 
@@ -246,16 +255,16 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpGet]
-        //[Authorize(Policy = "Agent")]
+        [Authorize(Roles = "Agent")]
         public IActionResult CreateRent()
         {
-            var housingTypes = _housingTypeRepository.GetAll();
-            var heatingTypes = _heatingTypeRepository.GetAll();
-            var floorLocations = _floorLocationRepository.GetAll();
-            var usageStatues = _usageStatusRepository.GetAll();
-            var facadeTypes = _facadeRepository.GetAll();
-            var districts = _districtRepository.GetAll();
-            var cities = _cityRepository.GetAll();
+            var housingTypes = _housingTypeRepository.GetAll(true);
+            var heatingTypes = _heatingTypeRepository.GetAll(true);
+            var floorLocations = _floorLocationRepository.GetAll(true);
+            var usageStatues = _usageStatusRepository.GetAll(true);
+            var facadeTypes = _facadeRepository.GetAll(true);
+            var districts = _districtRepository.GetAll(true);
+            var cities = _cityRepository.GetAll(true);
 
             var housingAdvertisementViewModel = new HousingAdvertisementViewModel
             {
@@ -300,7 +309,7 @@ namespace EmlakOfisiSitesi.Controllers
 
 
         [HttpPost]
-        //[Authorize(Policy = "Agent")]
+        [Authorize(Roles = "Agent")]
         public async Task<IActionResult> CreateRent(HousingAdvertisementViewModel housingAdvertisementViewModel)
         {
             var validationResult = await _housingAdvertisementValidator.ValidateAsync(housingAdvertisementViewModel);
@@ -317,8 +326,6 @@ namespace EmlakOfisiSitesi.Controllers
             HousingType housingType = _housingTypeRepository.GetById(housingAdvertisementViewModel.HousingTypeId);
             HeatingType heatingType = _heatingTypeRepository.GetById(housingAdvertisementViewModel.HeatingTypeId);
             FloorLocation floorLocation = _floorLocationRepository.GetById(housingAdvertisementViewModel.FloorLocationId);
-            UsageStatus usageStatus = _usageStatusRepository.GetById(housingAdvertisementViewModel.UsageStatusId);
-            Facade facade = _facadeRepository.GetById(housingAdvertisementViewModel.FacadeId);
             City city = _cityRepository.GetById(housingAdvertisementViewModel.CityId);
             District district = _districtRepository.GetById(housingAdvertisementViewModel.DistrictId);
 
@@ -345,20 +352,32 @@ namespace EmlakOfisiSitesi.Controllers
                         FloorLocation = floorLocation,
                         FloorNumber = housingAdvertisementViewModel.FloorNumber,
                         IsFurnished = housingAdvertisementViewModel.IsFurnished,
-                        UsageStatus = usageStatus,
-                        Facade = facade,
                         Dues = housingAdvertisementViewModel.Dues,
                         IsOnSite = housingAdvertisementViewModel.IsOnSite,
                         Deposit = housingAdvertisementViewModel.Deposit,
                         City = city,
                         District = district,
-                        DeedStatus = null,
                         Address = housingAdvertisementViewModel.Address,
                         IsForSale = false,
                         IsForRent = true,
                         Agent = agentUser,
-                        IsActive = true
+                        IsActive = true,
+                        IsCreditEligibility = false,
+                        //DeedStatus = null,
+                        //RentalIncome = null,
+
                     };
+
+                    if (housingAdvertisementViewModel.UsageStatusId != null)
+                    {
+                        UsageStatus usageStatus = _usageStatusRepository.GetById((Guid)housingAdvertisementViewModel.UsageStatusId);
+                        housingAdvertisement.UsageStatus = usageStatus;
+                    }
+                    if (housingAdvertisementViewModel.FacadeId != null)
+                    {
+                        Facade facade = _facadeRepository.GetById((Guid)housingAdvertisementViewModel.FacadeId);
+                        housingAdvertisement.Facade = facade;
+                    }
 
                     string uploadDirectory = "wwwroot/images/HousingAdvertisements";
                     List<HousingAdvertisementPhoto> housingAdvertisementPhotos = new List<HousingAdvertisementPhoto>();
@@ -395,19 +414,19 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Policy = "Agent")]
+        [Authorize]
         public IActionResult Update(Guid id)
         {
             HousingAdvertisement housingAdvertisement = _housingAdvertisementRepository.GetById(id);
             if (housingAdvertisement == null) { return NotFound(); }
-            var deedStatues = _deedStatusRepository.GetAll();
-            var districts = _districtRepository.GetAll();
-            var facades = _facadeRepository.GetAll();
-            var floorLocations = _floorLocationRepository.GetAll();
-            var heatingTypes = _heatingTypeRepository.GetAll();
-            var housingTypes = _housingTypeRepository.GetAll();
-            var cities = _cityRepository.GetAll();
-            var usageStatuses = _usageStatusRepository.GetAll();
+            var deedStatues = _deedStatusRepository.GetAll(true);
+            var districts = _districtRepository.GetAll(true);
+            var facades = _facadeRepository.GetAll(true);
+            var floorLocations = _floorLocationRepository.GetAll(true);
+            var heatingTypes = _heatingTypeRepository.GetAll(true);
+            var housingTypes = _housingTypeRepository.GetAll(true);
+            var cities = _cityRepository.GetAll(true);
+            var usageStatuses = _usageStatusRepository.GetAll(true);
 
 
             EditHousingAdvertisementViewModel editHousingAdvertisementViewModel = new EditHousingAdvertisementViewModel
@@ -431,13 +450,13 @@ namespace EmlakOfisiSitesi.Controllers
                 Price = housingAdvertisement.Price,
                 RentalIncome = housingAdvertisement.RentalIncome,
                 RoomNumber = housingAdvertisement.RoomNumber,
-                DeedStatusId = housingAdvertisement.DeedStatus.Id,
+                DeedStatusId = housingAdvertisement.DeedStatus?.Id,
                 DeedStatues = deedStatues.Select(d => new SelectListItem { Text = d.Name, Value = d.Id.ToString() }),
                 CityId = housingAdvertisement.City.Id,
                 Cities = cities.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }),
                 DistrictId = housingAdvertisement.District.Id,
                 Districts = districts.Select(d => new SelectListItem { Text = d.Name, Value = d.Id.ToString() }),
-                FacadeId = housingAdvertisement.Facade.Id,
+                FacadeId = housingAdvertisement.Facade?.Id,
                 Facades = facades.Select(f => new SelectListItem { Text = f.Name, Value = f.Id.ToString() }),
                 FloorLocationId = housingAdvertisement.FloorLocation.Id,
                 FloorLocations = floorLocations.Select(f => new SelectListItem { Text = f.Name, Value = f.Id.ToString() }),
@@ -445,30 +464,32 @@ namespace EmlakOfisiSitesi.Controllers
                 HeatingTypes = heatingTypes.Select(h => new SelectListItem { Text = h.Name, Value = h.Id.ToString() }),
                 HousingTypeId = housingAdvertisement.HousingType.Id,
                 HousingTypes = housingTypes.Select(h => new SelectListItem { Text = h.Name, Value = h.Id.ToString() }),
-                UsageStatusId = housingAdvertisement.UsageStatus.Id,
+                UsageStatusId = housingAdvertisement.UsageStatus?.Id,
                 UsageStatues = usageStatuses.Select(u => new SelectListItem { Text = u.Name, Value = u.Id.ToString() }),
+                IsForRent = housingAdvertisement.IsForRent,
+                IsForSale = housingAdvertisement.IsForSale,
             };
+
+
             return View(editHousingAdvertisementViewModel);
         }
 
         [HttpPost]
-        //[Authorize(Policy = "Agent")]
         public async Task<IActionResult> Update(EditHousingAdvertisementViewModel housingAdvertisementViewModel)
         {
             var validationResult = await _editHousingAdvertisementValidator.ValidateAsync(housingAdvertisementViewModel);
-
             if (!validationResult.IsValid)
             {
                 foreach (var error in validationResult.Errors)
                     ModelState.AddModelError("", error.ErrorMessage);
-                var housingTypes = _housingTypeRepository.GetAll();
-                var heatingTypes = _heatingTypeRepository.GetAll();
-                var floorLocations = _floorLocationRepository.GetAll();
-                var usageStatues = _usageStatusRepository.GetAll();
-                var facadeTypes = _facadeRepository.GetAll();
-                var cities = _cityRepository.GetAll();
-                var districts = _districtRepository.GetAll();
-                var deedStatues = _deedStatusRepository.GetAll();
+                var housingTypes = _housingTypeRepository.GetAll(true);
+                var heatingTypes = _heatingTypeRepository.GetAll(true);
+                var floorLocations = _floorLocationRepository.GetAll(true);
+                var usageStatues = _usageStatusRepository.GetAll(true);
+                var facadeTypes = _facadeRepository.GetAll(true);
+                var cities = _cityRepository.GetAll(true);
+                var districts = _districtRepository.GetAll(true);
+                var deedStatues = _deedStatusRepository.GetAll(true);
 
                 housingAdvertisementViewModel.HousingTypes = housingTypes.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
                 housingAdvertisementViewModel.HeatingTypes = heatingTypes.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
@@ -484,17 +505,37 @@ namespace EmlakOfisiSitesi.Controllers
             HousingType housingType = _housingTypeRepository.GetById(housingAdvertisementViewModel.HousingTypeId);
             HeatingType heatingType = _heatingTypeRepository.GetById(housingAdvertisementViewModel.HeatingTypeId);
             FloorLocation floorLocation = _floorLocationRepository.GetById(housingAdvertisementViewModel.FloorLocationId);
-            UsageStatus usageStatus = _usageStatusRepository.GetById(housingAdvertisementViewModel.UsageStatusId);
-            Facade facade = _facadeRepository.GetById(housingAdvertisementViewModel.FacadeId);
             City city = _cityRepository.GetById(housingAdvertisementViewModel.CityId);
             District district = _districtRepository.GetById(housingAdvertisementViewModel.DistrictId);
-            DeedStatus deedStatus = _deedStatusRepository.GetById(housingAdvertisementViewModel.DeedStatusId);
-
+            if (housingAdvertisementViewModel.UsageStatusId != null)
+            {
+                UsageStatus usageStatus = _usageStatusRepository.GetById((Guid)housingAdvertisementViewModel.UsageStatusId);
+                housingAdvertisement.UsageStatus = usageStatus;
+            }
+            if (housingAdvertisementViewModel.FacadeId != null)
+            {
+                Facade facade = _facadeRepository.GetById((Guid)housingAdvertisementViewModel.FacadeId);
+                housingAdvertisement.Facade = facade;
+            }
+            if (housingAdvertisementViewModel.DeedStatusId != null)
+            {
+                DeedStatus deedStatus = _deedStatusRepository.GetById((Guid)housingAdvertisementViewModel.DeedStatusId);
+                housingAdvertisement.DeedStatus = deedStatus;
+            }
+            housingAdvertisement.HousingType = housingType;
+            housingAdvertisement.HeatingType = heatingType;
+            housingAdvertisement.FloorLocation = floorLocation;
+            housingAdvertisement.City = city;
+            housingAdvertisement.District = district;
             housingAdvertisement.Address = housingAdvertisementViewModel.Address;
             housingAdvertisement.Title = housingAdvertisementViewModel.Title;
             housingAdvertisement.BuildingAge = housingAdvertisementViewModel.BuildingAge;
             housingAdvertisement.BathroomNumber = housingAdvertisementViewModel.BathroomNumber;
-            housingAdvertisement.Deposit = housingAdvertisementViewModel.Deposit;
+            if (housingAdvertisementViewModel.Deposit != null)
+            {
+                housingAdvertisement.Deposit = housingAdvertisementViewModel.Deposit;
+            }
+
             housingAdvertisement.Description = housingAdvertisementViewModel.Description;
             housingAdvertisement.Dues = housingAdvertisementViewModel.Dues;
             housingAdvertisement.FloorNumber = housingAdvertisementViewModel.FloorNumber;
@@ -506,7 +547,11 @@ namespace EmlakOfisiSitesi.Controllers
             housingAdvertisement.IsOnSite = housingAdvertisementViewModel.IsOnSite;
             housingAdvertisement.IsSuitableForTrade = housingAdvertisementViewModel.IsSuitableForTrade;
             housingAdvertisement.Price = housingAdvertisementViewModel.Price;
-            housingAdvertisement.RentalIncome = housingAdvertisementViewModel.RentalIncome;
+            if (housingAdvertisementViewModel.RentalIncome != null)
+            {
+                housingAdvertisement.RentalIncome = housingAdvertisementViewModel.RentalIncome;
+            }
+
             housingAdvertisement.RoomNumber = housingAdvertisementViewModel.RoomNumber;
 
             await _housingAdvertisementRepository.Update(housingAdvertisement);
@@ -515,7 +560,6 @@ namespace EmlakOfisiSitesi.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "Agent")]
         public async Task<IActionResult> Delete(Guid id)
         {
             HousingAdvertisement housingAdvertisement = _housingAdvertisementRepository.GetById(id);
@@ -530,13 +574,13 @@ namespace EmlakOfisiSitesi.Controllers
 
         private void GetAllTypes(HousingAdvertisementViewModel housingAdvertisementViewModel)
         {
-            var housingTypes = _housingTypeRepository.GetAll();
-            var heatingTypes = _heatingTypeRepository.GetAll();
-            var floorLocations = _floorLocationRepository.GetAll();
-            var usageStatues = _usageStatusRepository.GetAll();
-            var facadeTypes = _facadeRepository.GetAll();
-            var cities = _cityRepository.GetAll();
-            var districts = _districtRepository.GetAll();
+            var housingTypes = _housingTypeRepository.GetAll(true);
+            var heatingTypes = _heatingTypeRepository.GetAll(true);
+            var floorLocations = _floorLocationRepository.GetAll(true);
+            var usageStatues = _usageStatusRepository.GetAll(true);
+            var facadeTypes = _facadeRepository.GetAll(true);
+            var cities = _cityRepository.GetAll(true);
+            var districts = _districtRepository.GetAll(true);
 
             housingAdvertisementViewModel.HousingTypes = housingTypes.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
             housingAdvertisementViewModel.HeatingTypes = heatingTypes.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });

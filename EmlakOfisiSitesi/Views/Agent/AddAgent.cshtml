@@ -1,0 +1,63 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "AddAgent";
+    Layout = "~/Views/Shared/_AdminLayot.cshtml";
+}
+
+<div class="display:flex">
+    <div class="margin:auto">
+        <form asp-action="AddAgent" asp-controller="Agent">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Şirket Adı</label>
+                    <input type="text" class="form-control" asp-for="CompanyName">
+                    <span style="color:Red" asp-validation-for="CompanyName"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Adınız</label>
+                    <input type="text" class="form-control" asp-for="Name">
+                    <span style="color:Red" asp-validation-for="Name"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Soyadınız</label>
+                    <input type="text" class="form-control" asp-for="Surname">
+                    <span style="color:Red" asp-validation-for="Surname"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Email</label>
+                    <input type="email" class="form-control" asp-for="Email">
+                    <span style="color:Red" asp-validation-for="Email"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Telefon Numarası</label>
+                    <input type="text" class="form-control" asp-for="PhoneNumber" id="PhoneNumber">
+                    <span style="color:Red" asp-validation-for="PhoneNumber"></span>
+                </div>
+                <div class="col-md-12">
+                    <label>Kullanıcı Adınız</label>
+                    <input type="text" class="form-control" asp-for="UserName">
+                    <span style="color:Red" asp-validation-for="UserName"></span>
+                </div>
+                <div class="col-md-12">
+                    <label>Şifre</label>
+                    <input type="text" class="form-control" placeholder="123456" disabled>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success" style="width:100%;margin-top:15px">Kayıt Ol</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#PhoneNumber").inputmask("0599-999-99-99");
+        });
+    </script>
+}
+
+

@@ -24,8 +24,10 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<NumberOfFloorsInBuilding> GetAll()
+        public IEnumerable<NumberOfFloorsInBuilding> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.NumberOfFloorsInBuildings.Where(ba => ba.IsActive == IsActive);
             return _context.NumberOfFloorsInBuildings;
         }
 

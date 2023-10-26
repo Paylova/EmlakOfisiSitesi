@@ -1,4 +1,6 @@
-﻿namespace EmlakOfisiSitesi.Services.FileManager
+﻿using SixLabors.ImageSharp.Formats.Png;
+
+namespace EmlakOfisiSitesi.Services.FileManager
 {
     public class FileManager : IFileManager
     {
@@ -17,7 +19,10 @@
             {
                 file.CopyTo(stream);
             }
-
+            var image = Image.Load(filePath);
+            image.Mutate(x => x.Resize(new ResizeOptions { Size = new Size(1000, 1000), Mode = ResizeMode.Crop }));
+            image.Mutate(x => x.BackgroundColor(Color.Transparent));
+            image.Save(filePath, new PngEncoder());
             return uniqueFileName;
         }
 

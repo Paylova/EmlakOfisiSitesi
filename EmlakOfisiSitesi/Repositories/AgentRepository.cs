@@ -22,7 +22,7 @@ namespace EmlakOfisiSitesi.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Agent> GetAll()
+        public IEnumerable<Agent> GetAll(bool? IsActive = null)
         {
             return _context.Agents.ToList();
         }

@@ -25,8 +25,10 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<BuildingAge> GetAll()
+        public IEnumerable<BuildingAge> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.BuildingAges.Where(ba => ba.IsActive == IsActive);
             return _context.BuildingAges;
         }
 

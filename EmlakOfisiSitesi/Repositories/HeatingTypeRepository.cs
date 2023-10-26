@@ -24,8 +24,10 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<HeatingType> GetAll()
+        public IEnumerable<HeatingType> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.HeatingTypes.Where(ba => ba.IsActive == IsActive);
             return _context.HeatingTypes;
         }
 

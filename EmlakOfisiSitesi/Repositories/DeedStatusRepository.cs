@@ -24,14 +24,16 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<DeedStatus> GetAll()
+        public IEnumerable<DeedStatus> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.DeedStatuses.Where(ba => ba.IsActive == IsActive);
             return _context.DeedStatuses;
         }
 
         public DeedStatus GetById(Guid id)
         {
-            return _context.DeedStatuses.Find(id);
+            return _context.DeedStatuses.FirstOrDefault(f => f.Id == id);
         }
 
         public async Task Remove(DeedStatus entity)

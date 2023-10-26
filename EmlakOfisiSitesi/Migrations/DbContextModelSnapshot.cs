@@ -259,7 +259,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<Guid?>("DeedStatusId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Deposit")
+                    b.Property<decimal?>("Deposit")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
@@ -269,10 +269,10 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<Guid>("DistrictId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Dues")
+                    b.Property<decimal?>("Dues")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("FacadeId")
+                    b.Property<Guid?>("FacadeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("FloorLocationId")
@@ -305,13 +305,13 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<bool>("IsForSale")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsFurnished")
+                    b.Property<bool?>("IsFurnished")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsOnSite")
+                    b.Property<bool?>("IsOnSite")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsSuitableForTrade")
+                    b.Property<bool?>("IsSuitableForTrade")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("MainImageId")
@@ -323,7 +323,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("RentalIncome")
+                    b.Property<decimal?>("RentalIncome")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RoomNumber")
@@ -336,7 +336,7 @@ namespace EmlakOfisiSitesi.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UsageStatusId")
+                    b.Property<Guid?>("UsageStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -784,31 +784,7 @@ namespace EmlakOfisiSitesi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("AspNetUsers", t =>
-                        {
-                            t.Property("Name")
-                                .HasColumnName("Agent_Name");
-
-                            t.Property("Surname")
-                                .HasColumnName("Agent_Surname");
-                        });
-
                     b.HasDiscriminator().HasValue("Agent");
-                });
-
-            modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.User", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("EmlakOfisiSitesi.Models.Entities.District", b =>
@@ -846,9 +822,7 @@ namespace EmlakOfisiSitesi.Migrations
 
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.Facade", "Facade")
                         .WithMany()
-                        .HasForeignKey("FacadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacadeId");
 
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.FloorLocation", "FloorLocation")
                         .WithMany()
@@ -870,9 +844,7 @@ namespace EmlakOfisiSitesi.Migrations
 
                     b.HasOne("EmlakOfisiSitesi.Models.Entities.UsageStatus", "UsageStatus")
                         .WithMany()
-                        .HasForeignKey("UsageStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsageStatusId");
 
                     b.Navigation("Agent");
 

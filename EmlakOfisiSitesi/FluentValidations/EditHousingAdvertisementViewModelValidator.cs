@@ -32,15 +32,6 @@ namespace EmlakOfisiSitesi.FluentValidations
             RuleFor(model => model.NetSquareMeters)
                 .GreaterThan(0).WithMessage("Geçerli bir net metrekare giriniz.");
 
-            RuleFor(model => model.Dues)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir aidat miktarı giriniz.");
-
-            RuleFor(model => model.RentalIncome)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir kira geliri giriniz.");
-
-            RuleFor(model => model.Deposit)
-                .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir depozito miktarı giriniz.");
-
             RuleFor(model => model.Address)
                 .NotEmpty().WithMessage("Adres boş bırakılamaz.")
                 .MaximumLength(100).WithMessage("Adres en fazla 100 karakter olmalıdır.");
@@ -59,26 +50,10 @@ namespace EmlakOfisiSitesi.FluentValidations
             RuleFor(model => model.FloorNumber)
                 .GreaterThanOrEqualTo(0).WithMessage("Geçerli bir kat numarası giriniz.");
 
-            RuleFor(model => model.UsageStatusId)
-                .NotEmpty().WithMessage("Kullanım durumu seçmelisiniz.");
-
-            RuleFor(model => model.FacadeId)
-                .NotEmpty().WithMessage("Cephe tipi seçmelisiniz.");
-
             RuleFor(model => model.DistrictId)
                 .NotEmpty().WithMessage("İlçe seçmelisiniz.");
 
-            RuleFor(model => model.IsSuitableForTrade)
-                .NotNull().WithMessage("Ticaret için uygunluk durumunu seçmelisiniz.");
 
-            RuleFor(model => model.IsOnSite)
-                .NotNull().WithMessage("Site içinde bulunma durumunu seçmelisiniz.");
-
-            RuleFor(model => model.IsForSale)
-                .NotNull().WithMessage("Satılık durumunu seçmelisiniz.");
-
-            RuleFor(model => model.IsForRent)
-                .NotNull().WithMessage("Kiralık durumunu seçmelisiniz.");
         }
     }
 }

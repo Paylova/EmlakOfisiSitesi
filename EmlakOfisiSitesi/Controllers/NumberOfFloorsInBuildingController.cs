@@ -98,7 +98,7 @@ namespace EmlakOfisiSitesi.Controllers
             numberOfFloorsInBuilding.Name = numberOfFloorsInBuildingViewModel.Name;
             numberOfFloorsInBuilding.Min = numberOfFloorsInBuildingViewModel.Min;
             numberOfFloorsInBuilding.Max = numberOfFloorsInBuildingViewModel.Max;
-            numberOfFloorsInBuilding.IsActive = numberOfFloorsInBuilding.IsActive;
+            numberOfFloorsInBuilding.IsActive = numberOfFloorsInBuildingViewModel.IsActive;
 
             await _numberOfFloorsInBuildingRepository.Update(numberOfFloorsInBuilding);
 

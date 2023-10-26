@@ -10,6 +10,7 @@
             <tr>
                 <th>İlan Başlığı</th>
                 <th>İlan Açıklaması</th>
+                <th>İlan Satılık / Kiralık</th>
                 <th>İlan Fotoğrafları</th>
                 <th>Fiyat</th>
                 <th>Oda Salon Sayısı</th>
@@ -47,6 +48,16 @@
                     <td>@item.Title</td>
                     <td>@item.Description</td>
                     <td>
+                        @if (item.IsForSale)
+                        {
+                            <p>Satılık</p>
+                        }
+                        else
+                        {
+                            <p>Kiralık</p>
+                        }
+                    </td>
+                    <td>
                         @if (item.MainImageId != null)
                         {
                             var mainImage = item.HousingAdvertisementPhotos.FirstOrDefault(img => img.Id == item.MainImageId);
@@ -75,8 +86,8 @@
                     <th>@item.RentalIncome</th>
                     <th>@item.IsCreditEligibility</th>
                     <th>@item.IsSuitableForTrade</th>
-                    <th>@item.UsageStatus.Name</th>
-                    <th>@item.Facade.Name</th>
+                    <th>@item.UsageStatus?.Name</th>
+                    <th>@item.Facade?.Name</th>
                     <th>@item.DeedStatus?.Name</th>
                     <th>@item.City.Name</th>
                     <th>@item.District.Name</th>

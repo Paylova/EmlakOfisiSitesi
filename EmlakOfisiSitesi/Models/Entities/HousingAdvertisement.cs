@@ -18,15 +18,15 @@ namespace EmlakOfisiSitesi.Models.Entities
         public FloorLocation FloorLocation { get; set; }
         public int FloorNumber { get; set; }
         public bool IsCreditEligibility { get; set; }
-        public bool IsFurnished { get; set; }
-        public UsageStatus UsageStatus { get; set; }
-        public Facade Facade { get; set; }
-        public decimal Dues { get; set; }
+        public bool? IsFurnished { get; set; }
+        public UsageStatus? UsageStatus { get; set; }
+        public Facade? Facade { get; set; }
+        public decimal? Dues { get; set; }
         public DeedStatus? DeedStatus { get; set; }
-        public bool IsSuitableForTrade { get; set; }
-        public bool IsOnSite { get; set; }
-        public decimal RentalIncome { get; set; }
-        public decimal Deposit { get; set; }
+        public bool? IsSuitableForTrade { get; set; }
+        public bool? IsOnSite { get; set; }
+        public decimal? RentalIncome { get; set; }
+        public decimal? Deposit { get; set; }
         public City City { get; set; }
         public District District { get; set; }
         public string Address { get; set; }

@@ -24,8 +24,10 @@ namespace EmlakOfisiSitesi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<UsageStatus> GetAll()
+        public IEnumerable<UsageStatus> GetAll(bool? IsActive = null)
         {
+            if (IsActive.HasValue)
+                return _context.UsageStatuses.Where(ba => ba.IsActive == IsActive);
             return _context.UsageStatuses;
         }
 

@@ -50,7 +50,7 @@ namespace EmlakOfisiSitesi.Controllers
         public IActionResult List()
         {
 
-            IEnumerable<HousingAdvertisement> housingAdvertisements = _housingAdvertisementRepository.GetAll();
+            IEnumerable<HousingAdvertisement> housingAdvertisements = _housingAdvertisementRepository.GetAll(true);
 
             var viewModel = GetAllFilterList();
             var result = new Tuple<IEnumerable<HousingAdvertisement>, EmlakFiltreViewModel>(housingAdvertisements, viewModel);
@@ -254,19 +254,19 @@ namespace EmlakOfisiSitesi.Controllers
 
         public EmlakFiltreViewModel GetAllFilterList()
         {
-            IEnumerable<BuildingAge> buildingAges = _buildingAgeRepository.GetAll();
-            IEnumerable<DateOfAdvertisement> dateOfAdvertisements = _dateOfAdvertisementRepository.GetAll();
-            IEnumerable<DeedStatus> deedStatuses = _deedStatusRepository.GetAll();
-            IEnumerable<Facade> facades = _facadeRepository.GetAll();
-            IEnumerable<FloorLocation> floorLocations = _floorLocationRepository.GetAll();
-            IEnumerable<HeatingType> heatingTypes = _heatingTypeRepository.GetAll();
-            IEnumerable<HousingType> housingTypes = _housingTypeRepository.GetAll();
-            IEnumerable<NumberOfBathroom> numberOfBathrooms = _numberOfBathroomRepository.GetAll();
-            IEnumerable<NumberOfFloorsInBuilding> numberOfFloorsInBuildings = _numberOfFloorsInBuildingRepository.GetAll();
-            IEnumerable<NumberOfRoomHall> numberOfRoomHalls = _numberOfRoomHallRepository.GetAll();
-            IEnumerable<UsageStatus> usageStatuses = _usageStatusRepository.GetAll();
-            IEnumerable<City> cities = _cityRepository.GetAll();
-            IEnumerable<District> districts = _districtRepository.GetAll();
+            IEnumerable<BuildingAge> buildingAges = _buildingAgeRepository.GetAll(true);
+            IEnumerable<DateOfAdvertisement> dateOfAdvertisements = _dateOfAdvertisementRepository.GetAll(true);
+            IEnumerable<DeedStatus> deedStatuses = _deedStatusRepository.GetAll(true);
+            IEnumerable<Facade> facades = _facadeRepository.GetAll(true);
+            IEnumerable<FloorLocation> floorLocations = _floorLocationRepository.GetAll(true);
+            IEnumerable<HeatingType> heatingTypes = _heatingTypeRepository.GetAll(true);
+            IEnumerable<HousingType> housingTypes = _housingTypeRepository.GetAll(true);
+            IEnumerable<NumberOfBathroom> numberOfBathrooms = _numberOfBathroomRepository.GetAll(true);
+            IEnumerable<NumberOfFloorsInBuilding> numberOfFloorsInBuildings = _numberOfFloorsInBuildingRepository.GetAll(true);
+            IEnumerable<NumberOfRoomHall> numberOfRoomHalls = _numberOfRoomHallRepository.GetAll(true);
+            IEnumerable<UsageStatus> usageStatuses = _usageStatusRepository.GetAll(true);
+            IEnumerable<City> cities = _cityRepository.GetAll(true);
+            IEnumerable<District> districts = _districtRepository.GetAll(true);
 
             EmlakFiltreViewModel viewModel = new EmlakFiltreViewModel
             {

@@ -3,7 +3,7 @@
     public interface IRepository<TEntity> where TEntity : class
     {
         TEntity GetById(Guid id);
-        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll(bool? IsActive = null);
         Task Add(TEntity entity);
         Task AddRange(IEnumerable<TEntity> entities);
         Task Remove(TEntity entity);

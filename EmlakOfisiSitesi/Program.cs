@@ -1,4 +1,5 @@
 ﻿using EmlakOfisiSitesi.FluentValidations;
+using EmlakOfisiSitesi.Models;
 using EmlakOfisiSitesi.Models.Entities;
 using EmlakOfisiSitesi.Repositories;
 using EmlakOfisiSitesi.Services.FileManager;
@@ -20,6 +21,12 @@ namespace EmlakOfisiSitesi
             builder.Services.AddDbContext<Models.DbContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("localhost")
                 ));
+
+            //using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+            //{
+            //    var dbContext = scope.ServiceProvider.GetRequiredService<Models.DbContext>();
+            //    DbSeeder.SeedData(dbContext);
+            //}
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {

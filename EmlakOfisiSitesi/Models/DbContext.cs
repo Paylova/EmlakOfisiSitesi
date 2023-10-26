@@ -19,7 +19,6 @@ namespace EmlakOfisiSitesi.Models
         public DbSet<HousingAdvertisement> HousingAdvertisements { get; set; }
         public DbSet<HousingType> HousingTypes { get; set; }
         public DbSet<UsageStatus> UsageStatuses { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<NumberOfRoomHall> NumberOfRoomHalls { get; set; }
         public DbSet<NumberOfBathroom> NumberOfBathrooms { get; set; }
         public DbSet<BuildingAge> BuildingAges { get; set; }
