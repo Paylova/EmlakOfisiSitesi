@@ -45,15 +45,26 @@
         <p>Kat Konumu: @Model.FloorLocation.Name</p>
         <p>Kat Numarası: @Model.FloorNumber</p>
         <p>Krediye Uygun: @(Model.IsCreditEligibility ? "Evet" : "Hayır")</p>
-        <p>Eşyalı: @((bool)Model.IsFurnished ? "Evet" : "Hayır")</p>
+
+        @if (Model.IsFurnished.HasValue)
+        {
+            <p>Eşyalı: @((bool)Model.IsFurnished ? "Evet" : "Hayır")</p>
+        }
         <p>Kullanım Durumu: @Model.UsageStatus?.Name</p>
     </div>
     <div class="col-md-6" style="border: 1px solid #000;border-radius: 10px;box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); padding: 20px;">
         <p>Cephe: @Model.Facade?.Name</p>
         <p>Aidat: @string.Format("{0:N0} ₺", Model.Dues)</p>
         <p>Tapu Durumu: @Model.DeedStatus?.Name</p>
-        <p>Ticaret için Uygun: @((bool)Model.IsSuitableForTrade ? "Evet" : "Hayır")</p>
-        <p>Sitede mi: @((bool)Model.IsOnSite ? "Evet" : "Hayır")</p>
+        @if (Model.IsSuitableForTrade.HasValue)
+        {
+            <p>Takas için Uygun: @((bool)Model.IsSuitableForTrade ? "Evet" : "Hayır")</p>
+        }
+
+        @if (Model.IsOnSite.HasValue)
+        {
+            <p>Sitede mi: @((bool)Model.IsOnSite ? "Evet" : "Hayır")</p>
+        }
         <p>Kira Geliri: @string.Format("{0:N0} ₺", Model.RentalIncome)</p>
         <p>Depozito: @string.Format("{0:N0} ₺", Model.Deposit)</p>
         <p>Şehir: @Model.City.Name</p>

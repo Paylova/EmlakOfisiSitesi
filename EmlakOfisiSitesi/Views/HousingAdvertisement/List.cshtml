@@ -46,7 +46,17 @@
             {
                 <tr>
                     <td>@item.Title</td>
-                    <td>@item.Description</td>
+                    <td>
+                        @if (item.Description.Length > 50)
+                        {
+                            string newDescription = item.Description.Substring(0, 45);
+                            <span>@newDescription ..</span>
+                        }
+                        else
+                        {
+                            <span>@item.Description</span>
+                        }
+                    </td>
                     <td>
                         @if (item.IsForSale)
                         {
